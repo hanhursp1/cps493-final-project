@@ -1,0 +1,19 @@
+{
+  "items": [
+    {
+      "id": 0,
+      "timestamp": 0,
+      "post": {
+        "title": "Hello world!",
+        "body": {
+          "posterID": 0,
+          "body": "Just a quick test of the system!",
+          "likes": 0,
+          "reposts": 0,
+          "replies": [],
+          "attachments": []
+        }
+      }
+    }
+  ]
+}

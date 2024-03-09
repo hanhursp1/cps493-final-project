@@ -1,0 +1,15 @@
+{
+  "items": [
+    {
+      "id": 0,
+      "username": "hanhursp1",
+      "name": {
+        "first": "Philip",
+        "last": "Hanhurst"
+      },
+      "token": "",
+      "privilege": 2,
+      "activities": [] 
+    }
+  ]
+}
