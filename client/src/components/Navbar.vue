@@ -63,14 +63,14 @@ function setMenuActive(val: boolean) {
     </div>
 
     <div class="navbar-end">
-      <div class="navbar-item">
+      <div class="navbar-item" v-if="!store.state?.user">
         <div class="buttons">
-          <a class="button is-primary">
+          <RouterLink to="/register" class="button is-primary">
             <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">
+          </RouterLink>
+          <RouterLink to="/login" class="button is-light">
             Log in
-          </a>
+          </RouterLink>
         </div>
       </div>
     </div>

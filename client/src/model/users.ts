@@ -18,13 +18,16 @@ export type Name = {
 
 // User type, as stored in the database
 export interface User {
-  id: number
-  username: string
-  displayname?: string // If undefined, use the user's real name
-  name: Name
-  token: string   // Hashed version of the password
+  id: number            // User ID
+  username: string      // User's username, used to login
+  displayname?: string  // If undefined, use the user's real name
+  name: Name            // User's full name
+  token: string         // Hashed version of the password
+  pfp?: string           // URL to the user's profile picture
   privilege: UserPrivilege  // User's privilege level
+  posts: number[]       // IDs of the user's posts
   activities: number[]  // Stores the IDs of the user's activities
+  friends: number[]     // IDs of the user's friends
 }
 
 // A simplified version of the user to store in the session
@@ -40,15 +43,5 @@ export function getUsersRaw(): User[] {
 
 // Gets the cached users from the store
 export function getUsers(): User[] {
-  if (store.state) {
-    return store.state.users
-  } else {
-    return []
-  }
+  return store.state ? store.state.users : []
 }
-
-// // Gets the map of usernames to IDs. Meant as a debug for logging in.
-// export function getUsernameMap(): Map<string, number> {
-//   return new Map(Object.entries(usernamemap))
-// }
-

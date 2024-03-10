@@ -9,7 +9,9 @@ if (!store.state) store.state = initStore()
 
 <template>
   <Navbar />
-  <RouterView />
+  <div class="container">
+    <RouterView />
+  </div>
 </template>
 
 <style scoped>
