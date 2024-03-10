@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import store from '@/store'
+import router from '@/router';
+
+import PostsView from '@/components/PostsView.vue';
+
 if (!store.state?.user) {
-  router.push('/')
+  // router.push('/')
 }
 </script>
 
 <template>
   <div>
-
+    <PostsView />
   </div>
 </template>
 

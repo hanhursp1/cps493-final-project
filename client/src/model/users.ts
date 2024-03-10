@@ -45,3 +45,7 @@ export function getUsersRaw(): User[] {
 export function getUsers(): User[] {
   return store.state ? store.state.users : []
 }
+
+export function getUser(userID: number): User | undefined {
+  return store.state ? store.state.users[userID] : undefined
+}
