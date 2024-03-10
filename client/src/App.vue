@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Navbar from './components/Navbar.vue'
-import store from './store';
+import Navbar from '@/components/Navbar.vue'
+import store from '@/store';
+import { initStore } from '@/model/initialization';
 
-store.user? store.user.id = 12 : store.user = {id: 12, token: ""}
+if (!store.state) store.state = initStore()
 </script>
 
 <template>

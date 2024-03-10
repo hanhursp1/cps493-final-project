@@ -13,8 +13,6 @@ function toggleMenu() {
 function setMenuActive(val: boolean) {
   isActive.value = val
 }
-
-alert("User ID is: " + store.user?.id)
 </script>
 
 <template>

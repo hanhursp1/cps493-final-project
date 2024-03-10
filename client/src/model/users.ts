@@ -1,4 +1,5 @@
 import users from '@/data/users.json'
+import usernamemap from '@/data/usernamemap.json'
 
 // User access level
 export enum UserPrivilege {
@@ -33,4 +34,8 @@ export interface UserSession {
 
 export function getUsers(): User[] {
   return users.items as User[]
+}
+
+export function getUsernameMap(): Map<string, number> {
+  return new Map(Object.entries(usernamemap))
 }
