@@ -1,5 +1,6 @@
 import users from '@/data/users.json'
 import usernamemap from '@/data/usernamemap.json'
+import store from '@/store'
 
 // User access level
 export enum UserPrivilege {
@@ -32,10 +33,22 @@ export interface UserSession {
   token: string // The hash of the user's password
 }
 
-export function getUsers(): User[] {
+// Gets the users array from the json, meant for store initialization
+export function getUsersRaw(): User[] {
   return users.items as User[]
 }
 
-export function getUsernameMap(): Map<string, number> {
-  return new Map(Object.entries(usernamemap))
+// Gets the cached users from the store
+export function getUsers(): User[] {
+  if (store.state) {
+    return store.state.users
+  } else {
+    return []
+  }
 }
+
+// // Gets the map of usernames to IDs. Meant as a debug for logging in.
+// export function getUsernameMap(): Map<string, number> {
+//   return new Map(Object.entries(usernamemap))
+// }
+

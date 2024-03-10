@@ -2,13 +2,25 @@
   "items": [
     {
       "id": 0,
+      "username": "admin",
+      "displayname": "System",
+      "name": {
+        "first": "",
+        "last": ""
+      },
+      "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
+      "privilege": 2,
+      "activities": [] 
+    },
+    {
+      "id": 1,
       "username": "hanhursp1",
       "name": {
         "first": "Philip",
         "last": "Hanhurst"
       },
       "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
-      "privilege": 2,
+      "privilege": 1,
       "activities": [] 
     }
   ]
