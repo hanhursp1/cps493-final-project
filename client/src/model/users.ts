@@ -46,6 +46,16 @@ export function getUsers(): User[] {
   return store.state ? store.state.users : []
 }
 
+// Returns a user based on their ID
 export function getUser(userID: number): User | undefined {
   return store.state ? store.state.users[userID] : undefined
+}
+
+// Returns a users's ID based on their username
+export function getUserID(username: string): number | undefined {
+  return store.state ? store.state.usernameMap.get(username) : undefined
+}
+
+export function currentUser(): User | undefined {
+  return store.state?.user ? getUser(store.state.user.id) : undefined
 }

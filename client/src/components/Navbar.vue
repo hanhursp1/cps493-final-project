@@ -18,9 +18,9 @@ function setMenuActive(val: boolean) {
 <template>
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
+    <RouterLink to="/" class="navbar-item">
       <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-    </a>
+    </RouterLink>
 
     <a role="button" @click="toggleMenu()" class="navbar-burger" :class="{'is-active':isActive}" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
@@ -31,13 +31,13 @@ function setMenuActive(val: boolean) {
 
   <div id="navbarBasicExample" class="navbar-menu" :class="{'is-active':isActive}">
     <div class="navbar-start">
-      <RouterLink to="/" active-class="is-active" class="navbar-item">
+      <RouterLink to="/home" active-class="is-active" class="navbar-item">
         Home
       </RouterLink>
 
-      <RouterLink to="/users" class="navbar-item">
+      <!-- <RouterLink to="/users" class="navbar-item">
         Users
-      </RouterLink>
+      </RouterLink> -->
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
@@ -48,7 +48,7 @@ function setMenuActive(val: boolean) {
           <RouterLink to="/about" class="navbar-item">
             About
           </RouterLink>
-          <a class="navbar-item">
+          <!-- <a class="navbar-item">
             Jobs
           </a>
           <a class="navbar-item">
@@ -57,7 +57,7 @@ function setMenuActive(val: boolean) {
           <hr class="navbar-divider">
           <a class="navbar-item">
             Report an issue
-          </a>
+          </a> -->
         </div>
       </div>
     </div>

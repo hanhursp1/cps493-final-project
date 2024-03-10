@@ -30,7 +30,7 @@ export enum LoginStatus {
 export function login(username: string, password: string): LoginStatus {
   if (store.state) {
     let userID = store.state.usernameMap.get(username)
-    if (!userID) return LoginStatus.InvalidUser;
+    if (userID === undefined) return LoginStatus.InvalidUser;
     let passHash = hashPassword(password)
     let correspondingUser = store.state.users[userID]
     // Password matches, Let the user login!

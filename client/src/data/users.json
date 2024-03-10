@@ -10,7 +10,7 @@
       },
       "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
       "privilege": 2,
-      "posts": [],
+      "posts": [1],
       "activities": [],
       "friends": [1]
     },
@@ -27,6 +27,21 @@
       "posts": [0],
       "activities": [],
       "friends": [0]
+    },
+    {
+      "id": 2,
+      "username": "totally_an_admin123",
+      "name": {
+        "first": "Lee",
+        "last": "Zard"
+      },
+      "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
+      "pfp": "./users/he_stole_my_nugget.jpg",
+      "privilege": 0,
+      "posts": [2],
+      "activities": [],
+      "friends": []
     }
+    
   ]
 }
