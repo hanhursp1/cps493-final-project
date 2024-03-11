@@ -3,7 +3,6 @@ import type { Post } from '@/model/posts';
 import { getUser, currentUser, type User } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PostFooter from './PostFooter.vue';
-import store from '@/store';
 const props = defineProps<{
   post: Post
 }>()

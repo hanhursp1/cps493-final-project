@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import store from '@/store';
 import router from '@/router';
-import { getUser, type User } from '@/model/users';
-import type { Activity, Summary } from '@/model/activities';
+import { currentUser, getUser, isLoggedIn, type User } from '@/model/users';
+import { getActivityByID, type Activity, type Summary } from '@/model/activities';
 import ActivityStats from '@/components/ActivityStats.vue'
 
-if (!store.state?.user) {
+if (!isLoggedIn()) {
   router.push('/')
 }
 
-const user = store.state?.user ? store.state.user.userData : getUser(3) as User
+const user = currentUser() as User
 const userActivities = user.activities
-  .map((id) => store.state?.activities[id])
+  .map((id) => getActivityByID(id))
   .filter((act) => act !== undefined) as Activity[]
 
 function reductionFunc(l: Summary, r: Activity) {

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { hashPassword, login } from '@/model/password'
 import { LoginStatus } from '@/model/password'
+import { getUserID } from '@/model/users'
 import router from '@/router'
-import store from '@/store'
 import { ref, computed } from 'vue'
 
 let isLoading = ref(false)
@@ -15,10 +15,7 @@ let password = ref("")
 
 // Holy fuck
 const validUsername = computed(
-  () => username.value === "" ? undefined :
-    store.state ? (store.state.usernameMap.has(username.value) ?
-      true : false)
-    : undefined
+  () => username.value === "" ? undefined : (getUserID(username.value) !== undefined)
 )
 
 // Submit the user's login info and display an error based on the response.

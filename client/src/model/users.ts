@@ -65,6 +65,10 @@ export function currentUser(): User | undefined {
   return store.state?.user ? getUser(store.state.user.id) : undefined
 }
 
+export function isLoggedIn(): boolean {
+  return store.state?.user !== undefined;
+}
+
 export function getPFP(user: User | undefined): string {
   return user?.pfp ? user.pfp : './users/admin.png'
 }

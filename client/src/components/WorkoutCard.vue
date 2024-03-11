@@ -4,7 +4,6 @@ import type { Post } from '@/model/posts';
 import { getUser, currentUser, type User } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PostFooter from '@/components/PostFooter.vue'
-import store from '@/store';
 import ActivityStats from './ActivityStats.vue';
 
 
