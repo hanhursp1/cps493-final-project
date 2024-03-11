@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import store from '@/store';
-import { UserPrivilege, currentUser } from '@/model/users';
+import { UserPrivilege, currentUser, getPFP } from '@/model/users';
 
 let isActive: Ref<boolean> = ref(false)
 
@@ -82,6 +82,13 @@ function setMenuActive(val: boolean) {
           </RouterLink>
         </div>
       </div>
+      <div class="navbar-item" v-else>
+        <p>{{ currentUser()?.username }}</p>
+        <hr width="2" size="32" style="margin: 0px 5px 0px 5px;">
+        <figure class="image is-32x32">
+          <img class="pfp" :src="getPFP(currentUser())" alt="">
+        </figure>
+      </div>
     </div>
   </div>
 </nav>
@@ -94,5 +101,12 @@ function setMenuActive(val: boolean) {
 
 .router-link-active {
   border-bottom: 2px solid #00d2b3;
+}
+
+.pfp {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 32px;
+  height:32px;
 }
 </style>

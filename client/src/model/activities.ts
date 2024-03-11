@@ -13,8 +13,16 @@ export interface Activity {
 
 export interface Summary {
   calories: number
-  distance: number
+  distance?: number
   duration: number
+}
+
+export function createSummary(act: Activity): Summary {
+  return {
+    calories: act.caloriesBurned,
+    distance: act.distance,
+    duration: act.durationSeconds
+  }
 }
 
 // Get raw activities array from json.

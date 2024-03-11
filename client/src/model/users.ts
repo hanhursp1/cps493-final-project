@@ -65,6 +65,10 @@ export function currentUser(): User | undefined {
   return store.state?.user ? getUser(store.state.user.id) : undefined
 }
 
+export function getPFP(user: User | undefined): string {
+  return user?.pfp ? user.pfp : './users/admin.png'
+}
+
 export function removeUser(id: number) {
   if (store.state) {
     store.state.users[id] = undefined as unknown as User

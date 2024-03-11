@@ -17,7 +17,7 @@ const userActivities = user.activities
 function reductionFunc(l: Summary, r: Activity) {
   return {
     calories: l.calories + r.caloriesBurned,
-    distance: l.distance + (r.distance ? r.distance : 0),
+    distance: (l.distance ? l.distance : 0) + (r.distance ? r.distance : 0),
     duration: l.duration + r.durationSeconds
   }
 }
@@ -47,11 +47,11 @@ const today = userActivities.filter((act) => {
 <template>
   <div class="content">
     <h1 class="summary-head">Today</h1>
-    <ActivityStats :summary="today" />
+    <ActivityStats :summary="today" :colored-b-g="true" />
     <h1 class="summary-head">This Month</h1>
-    <ActivityStats :summary="thisMonth" />
+    <ActivityStats :summary="thisMonth" :colored-b-g="true" />
     <h1 class="summary-head">All Time</h1>
-    <ActivityStats :summary="allTime" />
+    <ActivityStats :summary="allTime" :colored-b-g="true" />
   </div>
 </template>
 

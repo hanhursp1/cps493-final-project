@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { getActivityByID, type Activity } from '@/model/activities';
+import { createSummary, getActivityByID, type Activity, type Summary } from '@/model/activities';
 import type { Post } from '@/model/posts';
 import { getUser, currentUser, type User } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PostFooter from '@/components/PostFooter.vue'
 import store from '@/store';
+import ActivityStats from './ActivityStats.vue';
+
+
 const props = defineProps<{
   post: Post
 }>()
@@ -27,7 +30,7 @@ const userPFP = poster.pfp ? poster.pfp : './users/admin.png'
     </div>
     <div class="card-content">
       <div class="content">
-        <p>{{ posterName }} just finished a {{ workout.name }} session, and burned {{ workout.caloriesBurned }} calories!</p>
+        <ActivityStats :summary="createSummary(workout)" :colored-b-g="false" />
       </div>
       <hr class="workout-divider">
       <div class="media">

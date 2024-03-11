@@ -10,15 +10,9 @@ const posts = computed(getPosts)
 </script>
 
 <template>
-  <div class="columns">
-    <div class="column is-one-quarter"></div>
-    <div class="column is-half">
-      <div v-for="post in posts" :key="post.postID">
-        <WorkoutCard v-if="post.activityID !== undefined" :post="post" />
-        <PostCard v-else :post="post" />
-      </div>
-    </div>
-    <div class="column is-one-quarter"></div>
+  <div v-for="post in posts" :key="post.postID">
+    <WorkoutCard v-if="post.activityID !== undefined" :post="post" />
+    <PostCard v-else :post="post" />
   </div>
 </template>
 
