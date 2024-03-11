@@ -53,7 +53,7 @@
       "pfp": "./users/low_quality_man.jpg",
       "privilege": 0,
       "posts": [3],
-      "activities": [],
+      "activities": [0],
       "friends": []
     }
     

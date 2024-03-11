@@ -5,7 +5,7 @@ import { UserPrivilege, currentUser } from '@/model/users';
 import AdminTableEntry from '@/components/AdminTableEntry.vue'
 
 if (currentUser()?.privilege != UserPrivilege.Admin) {
-  // router.push('/')
+  router.push('/')
 }
 </script>
 

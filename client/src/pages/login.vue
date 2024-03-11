@@ -6,8 +6,10 @@ import store from '@/store'
 import { ref, computed } from 'vue'
 
 let isLoading = ref(false)
-let badLogin = ref(false)
-let badLoginMessage = ref("")
+let loginResponse = ref({
+  badLogin: false,
+  reason: ""
+})
 let username = ref("")
 let password = ref("")
 
@@ -19,21 +21,24 @@ const validUsername = computed(
     : undefined
 )
 
+// Submit the user's login info and display an error based on the response.
 function submit() {
+  // When `isLoading` is set to true a loading bar will be displayed in place of the submission button
+  // This is a placeholder for when this inevitably becomes an async function
   isLoading.value = true
   const loginRes = login(username.value, password.value)
   switch(loginRes) {
     case LoginStatus.Ok:
-      badLogin.value = false
+      loginResponse.value.badLogin = false
       router.push('home')
       break
     case LoginStatus.InvalidPassword:
-      badLoginMessage.value = "Incorrect passoword!"
-      badLogin.value = true
+      loginResponse.value.reason = "Incorrect passoword!"
+      loginResponse.value.badLogin = true
       break
     case LoginStatus.InvalidUser:
-      badLoginMessage.value = "User not found!"
-      badLogin.value = true
+    loginResponse.value.reason = "User not found!"
+      loginResponse.value.badLogin = true
       break
   }
   isLoading.value = false
@@ -44,13 +49,13 @@ function submit() {
   <div class="columns">
     <div class="column"></div>
     <div class="column">
-      <article class="message is-danger" v-if="badLogin">
+      <article class="message is-danger" v-if="loginResponse.badLogin">
         <div class="message-header">
           <p>Could not log in!</p>
-          <button class="delete" aria-label="delete" @click="badLogin = false"></button>
+          <button class="delete" aria-label="delete" @click="loginResponse.badLogin = false"></button>
         </div>
         <div class="mesage-body">
-          {{ badLoginMessage }}
+          {{ loginResponse.reason }}
         </div>
       </article>
       <div class="field">

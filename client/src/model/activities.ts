@@ -11,6 +11,12 @@ export interface Activity {
   photo?: string          // Photo attachment (optional)
 }
 
+export interface Summary {
+  calories: number
+  distance: number
+  duration: number
+}
+
 // Get raw activities array from json.
 // Only meant to be used by the store initializer.
 export function getActivitiesRaw(): Activity[] {

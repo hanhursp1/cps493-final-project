@@ -72,3 +72,9 @@ export function createReply(reply: Reply, replyingTo: number): boolean {
     return false;
   }
 }
+
+export function deletePost(id: number) {
+  if (store.state) {
+    store.state.posts[id] == undefined
+  }
+}
