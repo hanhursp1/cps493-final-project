@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import store from '@/store';
+import { UserPrivilege, currentUser } from '@/model/users';
 
 let isActive: Ref<boolean> = ref(false)
 
@@ -38,6 +39,14 @@ function setMenuActive(val: boolean) {
       <!-- <RouterLink to="/users" class="navbar-item">
         Users
       </RouterLink> -->
+
+      <RouterLink to="/my-stats" active-class="is-active" class="navbar-item" v-if="store.state?.user">
+        My Stats
+      </RouterLink>
+
+      <RouterLink to="/admin" active-class="is-active" class="navbar-item" v-if="currentUser()?.privilege == UserPrivilege.Admin">
+        Admin Portal
+      </RouterLink>
 
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">

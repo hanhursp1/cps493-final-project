@@ -4,6 +4,7 @@ import store from '@/store'
 import { computed } from 'vue'
 
 import PostCard from './PostCard.vue';
+import WorkoutCard from './WorkoutCard.vue'
 
 const posts = computed(getPosts)
 </script>
@@ -13,7 +14,8 @@ const posts = computed(getPosts)
     <div class="column is-one-quarter"></div>
     <div class="column is-half">
       <div v-for="post in posts" :key="post.postID">
-        <PostCard v-if="post.activityID === undefined" :post="post" />
+        <WorkoutCard v-if="post.activityID !== undefined" :post="post" />
+        <PostCard v-else :post="post" />
       </div>
     </div>
     <div class="column is-one-quarter"></div>

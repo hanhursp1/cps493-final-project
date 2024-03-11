@@ -37,7 +37,8 @@ export function login(username: string, password: string): LoginStatus {
     if (correspondingUser.token === passHash) {
       store.state.user = {
         id: userID,
-        token: passHash
+        token: passHash,
+        userData: correspondingUser
       }
       return LoginStatus.Ok
     }

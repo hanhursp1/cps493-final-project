@@ -1,5 +1,13 @@
 {
   "items": [
-    
+    {
+      "id": 0,
+      "name": "cycling",
+      "timestamp": 0,
+      "durationSeconds": 3600,
+      "caloriesBurned": 600,
+      "distance": 100,
+      "photo": "./cycling_photo.jpg"
+    }
   ]
 }

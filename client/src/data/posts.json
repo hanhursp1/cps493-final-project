@@ -13,7 +13,7 @@
       "postID": 1,
       "posterID": 0,
       "timestamp": 0,
-      "body": "Announcement to all users:\nIf you see a lizard posing as an admin do NOT trust them!",
+      "body": "Announcement to all users:\nIf you see a lizard posing as an admin do NOT trust them! Admins will always have a green shield next to their names.",
       "likedBy": [],
       "replies": [],
       "attachments": []
@@ -26,6 +26,17 @@
       "likedBy": [],
       "replies": [],
       "attachments": []
+    },
+    {
+      "postID": 3,
+      "posterID": 3,
+      "timestamp": 0,
+      "body": "Cycling with friends!",
+      "likedBy": [],
+      "replies": [],
+      "attachments": [],
+      "activityID": 0
+
     }
   ]
 }

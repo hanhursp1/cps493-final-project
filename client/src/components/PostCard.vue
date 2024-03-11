@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import type { Post } from '@/model/posts';
-import { getUser, currentUser } from '@/model/users';
+import { getUser, currentUser, type User } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
+import PostFooter from './PostFooter.vue';
 import store from '@/store';
 const props = defineProps<{
   post: Post
 }>()
 
-const poster = getUser(props.post.posterID)
+// This should be safe since every post should have a valid user ID attached
+const poster = getUser(props.post.posterID) as User
+const canEdit = (poster && (currentUser()?.id == poster?.id) && (poster.privilege >= UserPrivilege.PremiumUser)) ||
+        (currentUser()?.privilege == UserPrivilege.Admin)
 
 const posterName = poster?.displayname ? poster.displayname : poster?.name.first + " " + poster?.name.last
 
 </script>
 
 <template>
-  <div class="card post">
+  <div class="card post" v-if="post !== undefined && poster !== undefined">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
@@ -24,7 +28,7 @@ const posterName = poster?.displayname ? poster.displayname : poster?.name.first
         </div>
         <div class="media-content">
           <p class="title is-4">{{ posterName }}
-          <span class="icon-text" v-if="poster ? poster.privilege > 0 : false">
+          <span class="icon-text" v-if="poster.privilege > 0">
             <span class="icon">
               <i class="fas" :class='{
                 "fa-shield-alt green": poster?.privilege === UserPrivilege.Admin,
@@ -39,15 +43,7 @@ const posterName = poster?.displayname ? poster.displayname : poster?.name.first
         <p>{{ post.body }}</p>
       </div>
     </div>
-    <footer class="card-footer" v-if="store.state?.user">
-      <a href="#" class="card-footer-item">Share</a>
-      <a href="#" class="card-footer-item">Like</a>
-      <a href="#" class="card-footer-item">Reply</a>
-      <a href="#" class="card-footer-item" v-if="
-        (poster && (currentUser()?.id == poster?.id) && (poster.privilege >= UserPrivilege.PremiumUser)) ||
-        (currentUser()?.privilege == UserPrivilege.Admin)
-      ">Edit</a>
-    </footer>
+    <PostFooter :post="post" :poster="poster" />
   </div>
 </template>
 

@@ -10,8 +10,8 @@ export interface Post {
   body: string          // Text contents of the post
   likedBy: number[]     // IDs of people who liked the post
   replies: number[]     // IDs of replies
-  activityID?: number   // ID of associated workout, if there is one
   attachments: string[] // Photo attachments
+  activityID?: number   // ID of associated workout, if there is one
 }
 
 export interface Reply {

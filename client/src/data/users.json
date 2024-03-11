@@ -41,6 +41,20 @@
       "posts": [2],
       "activities": [],
       "friends": []
+    },
+    {
+      "id": 3,
+      "username": "normalguy1",
+      "name": {
+        "first": "John",
+        "last": "Doe"
+      },
+      "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
+      "pfp": "./users/low_quality_man.jpg",
+      "privilege": 0,
+      "posts": [3],
+      "activities": [],
+      "friends": []
     }
     
   ]

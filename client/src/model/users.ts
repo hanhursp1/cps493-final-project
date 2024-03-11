@@ -34,6 +34,11 @@ export interface User {
 export interface UserSession {
   id: number    // The user's ID
   token: string // The hash of the user's password
+  userData: User// The user's data (Will likely be removed in the future for security)
+}
+
+export function getConcatName(user: User): string {
+  return user?.displayname ? user.displayname : user?.name.first + " " + user?.name.last
 }
 
 // Gets the users array from the json, meant for store initialization
@@ -58,4 +63,10 @@ export function getUserID(username: string): number | undefined {
 
 export function currentUser(): User | undefined {
   return store.state?.user ? getUser(store.state.user.id) : undefined
+}
+
+export function removeUser(id: number) {
+  if (store.state) {
+    store.state.users[id] = undefined as unknown as User
+  }
 }
