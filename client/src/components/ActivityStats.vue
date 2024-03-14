@@ -8,11 +8,11 @@ const props = defineProps<{
 
 function timeFormat(seconds: number, hasSeconds: boolean = false) {
   let sec = seconds
-  const s = String(sec % 60).padStart(2, '0')
+  const s = String(Math.floor(sec % 60)).padStart(2, '0')
   sec = sec / 60
-  const m = String(sec % 60).padStart(2, '0')
+  const m = String(Math.floor(sec % 60)).padStart(2, '0')
   sec = sec / 60
-  const h = String(sec)
+  const h = String(Math.floor(sec))
   return h + ":" + m + (hasSeconds ? ":" + s : "")
 }
 </script>

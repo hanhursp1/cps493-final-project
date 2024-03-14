@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import store from '@/store';
 import router from '@/router';
-import { UserPrivilege, currentUser } from '@/model/users';
+import { UserPrivilege, currentUser, getUsers } from '@/model/users';
 import AdminTableEntry from '@/components/AdminTableEntry.vue'
 
 if (currentUser()?.privilege != UserPrivilege.Admin) {
@@ -20,7 +19,7 @@ if (currentUser()?.privilege != UserPrivilege.Admin) {
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody v-for="user in store.state?.users">
+      <tbody v-for="user in getUsers()">
         <AdminTableEntry :user="user" />
       </tbody>
     </table>

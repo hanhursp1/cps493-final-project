@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { deletePost, type Post } from '@/model/posts';
-import { UserPrivilege, currentUser, type User } from '@/model/users';
-import store from '@/store';
+import { UserPrivilege, currentUser, isLoggedIn, type User } from '@/model/users';
 
 const props = defineProps<{
   post: Post,
@@ -20,7 +19,7 @@ function removePost() {
 </script>
 
 <template>
-  <footer class="card-footer" v-if="store.state?.user">
+  <footer class="card-footer" v-if="isLoggedIn()">
     <a href="#" class="card-footer-item">Share</a>
     <a href="#" class="card-footer-item">Like</a>
     <a href="#" class="card-footer-item">Reply</a>

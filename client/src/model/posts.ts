@@ -1,6 +1,8 @@
 import posts from '@/data/posts.json'
 import replies from '@/data/replies.json'
 import store from '@/store'
+import type { Ref } from 'vue'
+import { createActivity, type ActivitySubmission } from './activities'
 
 /* TYPES */
 export interface Post {
@@ -20,6 +22,12 @@ export interface Reply {
   posterID: number      // ID of the poster
   timestamp: number     // Unix timesamp of the reply
   body: string          // Text contained in the reply
+}
+
+export interface Submission {
+  postBody: string
+  attachments: string[]
+  activity?: ActivitySubmission
 }
 
 /* FUNCTIONS */
@@ -49,10 +57,19 @@ export function getReplies(): Reply[] {
 
 // Create a post and add it to the store
 // Returns true if the task succeeded
-export function createPost(post: Post): boolean {
+export function createPost(post: Submission): boolean {
   if (store.state && store.state.user) {
-    post.postID = store.state.posts.length
-    store.state.posts.push(post)
+    let newPost: Post = {
+      postID: store.state.posts.length,
+      posterID: store.state.user.id,
+      timestamp: Date.now(),
+      body: post.postBody,
+      likedBy: [],
+      replies: [],
+      attachments: post.attachments,
+      activityID: createActivity(post.activity)      
+    }
+    store.state.posts.push(newPost)
     return true;
   } else {
     return false;
@@ -75,6 +92,6 @@ export function createReply(reply: Reply, replyingTo: number): boolean {
 
 export function deletePost(id: number) {
   if (store.state) {
-    store.state.posts[id] == undefined
+    store.state.posts[id] = undefined as unknown as Post
   }
 }

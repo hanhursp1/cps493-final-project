@@ -2,8 +2,7 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import store from '@/store';
-import { UserPrivilege, currentUser, getPFP } from '@/model/users';
+import { UserPrivilege, currentUser, getPFP, isLoggedIn } from '@/model/users';
 
 let isActive: Ref<boolean> = ref(false)
 
@@ -40,7 +39,7 @@ function setMenuActive(val: boolean) {
         Users
       </RouterLink> -->
 
-      <RouterLink to="/my-stats" active-class="is-active" class="navbar-item" v-if="store.state?.user">
+      <RouterLink to="/my-stats" active-class="is-active" class="navbar-item" v-if="isLoggedIn()">
         My Stats
       </RouterLink>
 
@@ -72,7 +71,7 @@ function setMenuActive(val: boolean) {
     </div>
 
     <div class="navbar-end">
-      <div class="navbar-item" v-if="!store.state?.user">
+      <div class="navbar-item" v-if="!isLoggedIn()">
         <div class="buttons">
           <RouterLink to="/register" class="button is-primary">
             <strong>Sign up</strong>

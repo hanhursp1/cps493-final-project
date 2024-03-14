@@ -17,6 +17,14 @@ export interface Summary {
   duration: number
 }
 
+export interface ActivitySubmission {
+  name: string
+  photo?: string
+  calories: number
+  distance: number
+  durationMinutes: number
+}
+
 export function createSummary(act: Activity): Summary {
   return {
     calories: act.caloriesBurned,
@@ -37,4 +45,23 @@ export function getActivities(): Activity[] {
 
 export function getActivityByID(id: number): Activity {
   return store.state ? store.state.activities[id] : undefined as unknown as Activity
+}
+
+export function createActivity(act: ActivitySubmission | undefined): number | undefined {
+  if (store.state && act !== undefined && store.state.user) {
+    let newAct: Activity = {
+      id: store.state.activities.length,
+      name: act.name,
+      timestamp: Date.now(),
+      durationSeconds: act.durationMinutes * 60,
+      caloriesBurned: act.calories,
+      distance: act.distance != 0 ? act.distance : undefined,
+      photo: act.photo
+    }
+    store.state.activities.push(newAct)
+    store.state.user.userData.activities.push(newAct.id)
+    return newAct.id
+  } else {
+    return undefined
+  }
 }

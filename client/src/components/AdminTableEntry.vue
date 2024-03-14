@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { removeUser, getConcatName, type User } from '@/model/users';
-import store from '@/store';
+import { removeUser, getConcatName, type User, currentUser } from '@/model/users';
 
 const props = defineProps<{
   user: User
@@ -9,13 +8,11 @@ const props = defineProps<{
 const userPFP = props.user.pfp ? props.user.pfp : './users/admin.png'
 
 function deleteUser() {
-  if (store.state) {
-    if (store.state && store.state.user && store.state.user.id == props.user.id) {
-      alert("Cannot remove yourself!")
-      return
-    } 
-    removeUser(props.user.id)
-  }
+  if (currentUser()?.id == props.user.id) {
+    alert("Cannot remove yourself!")
+    return
+  } 
+  removeUser(props.user.id)
 }
 
 function editUser() {

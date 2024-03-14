@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Navbar from '@/components/Navbar.vue'
+import Navbar from '@/components/NavbarComponent.vue'
 import store from '@/store';
 import { initStore } from '@/model/initialization';
 
