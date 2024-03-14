@@ -30,6 +30,7 @@ const userPFP = poster.pfp ? poster.pfp : './users/admin.png'
     </div>
     <div class="card-content">
       <div class="content">
+        <p class="title">{{ workout.name }}</p>
         <ActivityStats :summary="createSummary(workout)" :colored-b-g="false" />
       </div>
       <hr class="workout-divider">
