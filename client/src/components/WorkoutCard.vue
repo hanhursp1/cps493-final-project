@@ -71,8 +71,4 @@ const userPFP = poster.pfp ? poster.pfp : './users/admin.png'
   margin-top: 10px;
   border-left: solid 4px green;
 }
-
-hr {
-  /* margin: 1px 10px 20px 10px; */
-}
 </style>
