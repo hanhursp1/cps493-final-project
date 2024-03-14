@@ -9,12 +9,14 @@ const posts = computed(getPosts)
 </script>
 
 <template>
-  <div v-for="post in posts" :key="post.postID">
+  <div v-for="post in posts">
+    <div v-if="post !== undefined">
     <WorkoutCard v-if="post.activityID !== undefined" :post="post" />
     <PostCard v-else :post="post" />
+    </div>
   </div>
 </template>
 
 <style scoped>
 
-</style>
+</style>./PrivilegeIcon.vue

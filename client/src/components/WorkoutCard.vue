@@ -5,6 +5,7 @@ import { getUser, currentUser, type User } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PostFooter from '@/components/PostFooter.vue'
 import ActivityStats from './ActivityStats.vue';
+import PrivilegeIcon from './PrivilegeIcon.vue';
 
 
 const props = defineProps<{
@@ -39,7 +40,7 @@ const userPFP = poster.pfp ? poster.pfp : './users/admin.png'
           </figure>
         </div>
         <div class="media-content">
-          <p class="title is-4">{{ posterName }}</p>
+          <p class="title is-4">{{ posterName }} <PrivilegeIcon :poster="poster" /></p>
           <p class="subtitle is-6">@{{ poster.username }}</p>
         </div>
       </div>

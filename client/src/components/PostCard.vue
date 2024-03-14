@@ -2,6 +2,7 @@
 import type { Post } from '@/model/posts';
 import { getUser, currentUser, type User } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
+import PrivilegeIcon from '@/components/PrivilegeIcon.vue'
 import PostFooter from './PostFooter.vue';
 const props = defineProps<{
   post: Post
@@ -26,15 +27,7 @@ const posterName = poster?.displayname ? poster.displayname : poster?.name.first
           </figure>
         </div>
         <div class="media-content">
-          <p class="title is-4">{{ posterName }}
-          <span class="icon-text" v-if="poster.privilege > 0">
-            <span class="icon">
-              <i class="fas" :class='{
-                "fa-shield-alt green": poster?.privilege === UserPrivilege.Admin,
-                "fa-crown gold": poster?.privilege === UserPrivilege.PremiumUser
-              }'></i>
-            </span>
-          </span></p>
+          <p class="title is-4">{{ posterName }} <PrivilegeIcon :poster="poster" /></p>
           <p class="subtitle is-6">@{{ poster?.username }}</p>
         </div>
       </div>
@@ -52,14 +45,6 @@ const posterName = poster?.displayname ? poster.displayname : poster?.name.first
   width: 48px;
   height: 48px;
   object-fit: cover;
-}
-
-.gold {
-  color: gold;
-}
-
-.green {
-  color: green;
 }
 
 .post {

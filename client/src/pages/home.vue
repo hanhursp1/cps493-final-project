@@ -1,7 +1,8 @@
 <script setup lang="ts">
-
-import PostsView from '@/components/PostsView.vue';
+import PostsView from '@/components/PostsView.vue'
 import CreatePost from '@/components/CreatePost.vue'
+import { ref } from 'vue';
+import { isLoggedIn } from '@/model/users';
 </script>
 
 <template>
@@ -9,7 +10,7 @@ import CreatePost from '@/components/CreatePost.vue'
     <div class="column is-one-quarter"></div>
     <div class="column is-one-half">
       <br>
-      <CreatePost />
+      <CreatePost v-if="isLoggedIn()" />
       <PostsView />
     </div>
     <div class="column is-one-quarter"></div>
