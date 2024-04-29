@@ -19,6 +19,7 @@ export type Name = {
 // User type, as stored in the database
 export interface User {
   id: number            // User ID
+  removed?: boolean     // Is the user deleted? (If this is defined and true, all other elements should be undefined)
   username: string      // User's username, used to login
   displayname?: string  // If undefined, use the user's real name
   name: Name            // User's full name
