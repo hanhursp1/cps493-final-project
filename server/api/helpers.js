@@ -16,6 +16,17 @@ function makeResponse(result) {
   }
 }
 
+/**
+ * @returns {DataEnvelope<void>}
+ */
+function makeEmptyResponse() {
+  return {
+    data: undefined,
+    isSuccess: true
+  }
+}
+
 module.exports = {
-  makeResponse
+  makeResponse,
+  makeEmptyResponse
 }

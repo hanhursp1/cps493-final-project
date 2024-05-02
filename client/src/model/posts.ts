@@ -1,6 +1,7 @@
-import posts from '@/data/posts.json'
-import replies from '@/data/replies.json'
+// import posts from '@/data/posts.json'
+// import replies from '@/data/replies.json'
 import store from '@/store'
+import { apiDelete, apiGet, apiPost } from './fetch'
 import type { Ref } from 'vue'
 import { createActivity, type ActivitySubmission } from './activities'
 
@@ -25,6 +26,7 @@ export interface Reply {
 }
 
 export interface Submission {
+  posterID: number
   postBody: string
   attachments: string[]
   activity?: ActivitySubmission
@@ -34,64 +36,61 @@ export interface Submission {
 
 // Get raw replies array from json.
 // Meant only to be used by the store initializer.
-export function getPostsRaw(): Post[] {
-  return posts.items
-}
+// export function getPostsRaw(): Post[] {
+//   return posts.items
+// }
 
 // Get posts. Currently, gets all the posts from the store
-export function getPosts(): Post[] {
-  return store.state ? store.state.posts : []
+export async function getPosts(): Promise<Post[]> {
+  // return store.state ? store.state.posts : []
+  const posts = await apiGet<Post[]>("posts")
+  return posts.isSuccess ? posts.data : []
+}
+
+export async function getPost(id: number): Promise<Post|undefined> {
+  const post = await apiGet<Post>("posts/" + Number(id|0))
+  return post.isSuccess ? post.data : undefined
 }
 
 // Get raw replies array from json.
 // Much like `getPostsRaw`, this is only meant to
 // be used by the store initializer.
-export function getRepliesRaw(): Reply[] {
-  return replies.items
-}
+// export function getRepliesRaw(): Reply[] {
+//   return replies.items
+// }
 
 // Get all replies. Currently gets from the store
-export function getReplies(): Reply[] {
-  return store.state ? store.state.replies : []
-}
+// export function getReplies(): Reply[] {
+//   return store.state ? store.state.replies : []
+// }
 
 // Create a post and add it to the store
 // Returns true if the task succeeded
-export function createPost(post: Submission): boolean {
-  if (store.state && store.state.user) {
-    let newPost: Post = {
-      postID: store.state.posts.length,
-      posterID: store.state.user.id,
-      timestamp: Date.now(),
-      body: post.postBody,
-      likedBy: [],
-      replies: [],
-      attachments: post.attachments,
-      activityID: createActivity(post.activity)      
-    }
-    store.state.posts.push(newPost)
-    return true;
-  } else {
-    return false;
-  }
+export async function createPost(post: Submission): Promise<boolean> {
+  const newPost = await apiPost<Submission, Post>("posts", post)
+  return newPost.isSuccess
 }
 
 // Create a reply and add it to the store.
 // Returns true if the task succeeded
-export function createReply(reply: Reply, replyingTo: number): boolean {
-  if (store.state && store.state.user) {
-    reply.parentID = replyingTo
-    reply.replyID = store.state.replies.length
-    store.state.replies.push(reply)
-    store.state.posts[replyingTo].replies.push(reply.replyID)
-    return true;
-  } else {
-    return false;
-  }
-}
+// export function createReply(reply: Reply, replyingTo: number): boolean {
+//   if (store.state && store.state.user) {
+//     reply.parentID = replyingTo
+//     reply.replyID = store.state.replies.length
+//     store.state.replies.push(reply)
+//     store.state.posts[replyingTo].replies.push(reply.replyID)
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 
-export function deletePost(id: number) {
-  if (store.state) {
-    store.state.posts[id] = undefined as unknown as Post
+export async function deletePost(id: number) {
+  // if (store.state) {
+  //   store.state.posts[id] = undefined as unknown as Post
+  // }
+  const result = await apiDelete<void, void>("posts/" + id)
+  if (!result.isSuccess) {
+    
   }
 }

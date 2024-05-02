@@ -54,6 +54,14 @@ app
       res.send(helpers.makeResponse(result))
     }).catch(next)
   })
+  .post("/login", (req, res, next) => {
+    if (!req.body.username || !req.body.password) {
+      throw new Error("Username and password fields required")
+    }
+    users.login(req.body.username, req.body.password).then(user => {
+      res.send(helpers.makeResponse(user))
+    }).catch(next)
+  })
   // .post("/register", (req, res, next) => {
 
   // })

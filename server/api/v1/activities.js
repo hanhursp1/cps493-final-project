@@ -43,3 +43,5 @@ app
       res.send(response)
     }).catch(next)
   })
+
+module.exports = app

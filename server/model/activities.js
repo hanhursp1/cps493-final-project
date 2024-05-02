@@ -49,23 +49,34 @@ async function create(submission) {
   }
   acts.items.push(newAct)
   try {
-    data.saveData(fileName, acts)
+    await data.saveData(fileName, acts)
   } catch(err) {
     console.error(err)
-    throw new Error("Could not create submission")
+    throw new Error("Could not create activity")
   }
   return newAct
 }
 
 /**
  * 
- * @param {Number} id 
+ * @param {number} id 
  * @returns {Promise<void>}
  */
 async function remove(id) {
   const acts = await dataP
   if (id < 0 || id >= acts.items.length) {
     throw new Error("Activity ID out of range")
+  }
+  // @ts-ignore
+  acts.items[id] = {
+    id: id,
+    removed: true
+  }
+  try {
+    await data.saveData(fileName, acts)
+  } catch(err) {
+    console.log(err)
+    throw new Error("Failed to delete activity")
   }
 }
 
