@@ -1,8 +1,15 @@
 import activities from '@/data/activities.json'
 import store from '@/store'
 
+export enum Visibility {
+  Public = 0,
+  Private = 1,
+  Deleted = 2
+}
+
 export interface Activity {
   id: number              // ID of the activity
+  removed?: boolean       // Whether or not post has been deleted
   name: string            // Name of the exercise
   timestamp: number       // Date and time as Unix timestamp
   durationSeconds: number // Amount of time exercise was done for

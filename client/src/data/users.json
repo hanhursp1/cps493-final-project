@@ -2,6 +2,7 @@
   "items": [
     {
       "id": 0,
+      "status": 0,
       "username": "admin",
       "displayname": "System",
       "name": {
@@ -16,6 +17,7 @@
     },
     {
       "id": 1,
+      "status": 0,
       "username": "hanhursp1",
       "name": {
         "first": "Philip",
@@ -30,6 +32,7 @@
     },
     {
       "id": 2,
+      "status": 0,
       "username": "totally_an_admin123",
       "name": {
         "first": "Lee",
@@ -44,6 +47,7 @@
     },
     {
       "id": 3,
+      "status": 0,
       "username": "normalguy1",
       "name": {
         "first": "John",

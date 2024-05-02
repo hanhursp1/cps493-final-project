@@ -6,6 +6,9 @@ const users = require('../../model/users')
  * @typedef {import('../../../client/src/model/users').User} User
  */ 
 /**
+ * @typedef {import('../../../client/src/model/registration').Signup} Signup
+ */ 
+/**
  * @template T
  * @typedef {import('../../../client/src/model/transporttypes').DataEnvelope} DataEnvelope<T>
  */
@@ -37,5 +40,22 @@ app
       res.send(helpers.makeResponse(usr))
     }).catch(next)
   })
+  .patch("/:id", (req, res, next) => {
+    let user = req.body
+    user.id = Number(req.params.id)
+    users.update(user.id).then(result => {
+      res.send(helpers.makeResponse(result))
+    }).catch(next)
+  })
+  .delete("/:id", (req, res, next) => {
+    const id = Number(req.params.id)
+    const admin = req.body
+    users.remove(id).then(result => {
+      res.send(helpers.makeResponse(result))
+    }).catch(next)
+  })
+  // .post("/register", (req, res, next) => {
+
+  // })
 
 module.exports = app
