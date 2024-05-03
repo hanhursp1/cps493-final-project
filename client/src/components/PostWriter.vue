@@ -19,6 +19,7 @@ const errors = ref([
 ] as boolean[])
 
 const submission: Ref<Submission> = ref({
+  posterID: currentUserID(),
   postBody: "",
   attachments: []
 })
@@ -30,7 +31,7 @@ const activity: Ref<ActivitySubmission> = ref({
   durationMinutes: 0
 })
 
-function submitPost() {
+async function submitPost() {
   // Check for errors before submitting the post
   errors.value[0] = submission.value.postBody == ""
   if(props.isWorkout) {
@@ -44,8 +45,9 @@ function submitPost() {
   if(errors.value.reduce((l, r) => l || r, false)) {
     return
   }
-  createPost(submission.value)
-  emit('exit', true)
+  const postSuccess = await createPost(submission.value)
+  if (postSuccess)
+    emit('exit', true)
 }
 
 

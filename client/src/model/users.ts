@@ -67,7 +67,7 @@ export function getUser(userID: number): User | undefined {
 
 // Returns a users's ID based on their username
 export async function getUserID(username: string): Promise<number | undefined> {
-  const users = await apiGet<User[]>("search?q=" + username)
+  const users = await apiGet<User[]>("users/search?q=" + username)
   if (!users.isSuccess) {
     return undefined
   }

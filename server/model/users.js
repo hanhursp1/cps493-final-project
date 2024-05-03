@@ -10,7 +10,11 @@ const fileName = __dirname + "/../data/users.json"
 /**
  * @type {Promise<{items: User[]}>}
  */
-const dataP = data.getData(fileName)
+let dataP = data.getData(fileName)
+
+async function refresh() {
+  dataP = data.getData(fileName)
+}
 
 /**
  * @type {User}
@@ -128,6 +132,7 @@ async function update(user, id = null) {
   users.items[index] = userResult
   try {
     await data.saveData(fileName, users)
+    refresh()
   } catch(err) {
     console.error(err)
     throw new Error("Could not save user data.")
@@ -165,6 +170,7 @@ async function updateSafe(user, id = null) {
   users.items[index] = userResult
   try {
     await data.saveData(fileName, users)
+    refresh()
   } catch(err) {
     console.error(err)
     throw new Error("Could not save user data.")
@@ -185,6 +191,7 @@ async function add(user) {
   users.items.push(user)
   try {
     await data.saveData(fileName, users)
+    refresh()
   } catch (err) {
     console.error(err)
     throw new Error("Could not add user to database.")
@@ -206,6 +213,7 @@ async function remove(id) {
   }
   try {
     await data.saveData(fileName, users)
+    refresh()
   } catch(err) {
     console.error(err)
     throw new Error("Could not remove user from database.")
@@ -230,6 +238,7 @@ async function removeSafe(admin, id) {
   }
   try {
     await data.saveData(fileName, users)
+    refresh()
   } catch(err) {
     console.error(err)
     throw new Error("Could not remove user from database.")
@@ -284,7 +293,11 @@ async function verifyAdmin(admin) {
 async function login(username, password) {
   const users = await dataP
   const passHash = await hashPassword(password)
+  console.log(username)
+  console.log(password)
+  console.log(passHash)
   const user = users.items.find(item => item.status == 0 && (item.username === username && item.token === passHash))
+  // console.log(user)
   if (!user) throw new Error("Invalid email or password")
   return user
 }
@@ -309,6 +322,7 @@ async function register(info, username, password) {
   users.items.push(user)
   try {
     await data.saveData(fileName, users)
+    refresh()
   } catch(err) {
     console.error(err)
     throw new Error("Something went wrong with the registration")

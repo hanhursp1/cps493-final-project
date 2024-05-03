@@ -17,8 +17,26 @@ app
   .get("/", (req, res, next) => {
     posts.getAll().then(all => {
       res.send(helpers.makeResponse(all))
-    })
+    }).catch(next)
   })
   .get("/:id", (req, res, next) => {
-    
+    const id = Number(req.params.id)
+    posts.get(id).then(p => {
+      res.send(helpers.makeResponse(p))
+    }).catch(next)
   })
+  .post("/", (req, res, next) => {
+    /** @type {Submission} */
+    const submission = req.body
+    posts.create(submission).then(p => {
+      res.send(helpers.makeResponse(p))
+    }).catch(next)
+  })
+  .delete("/:id", (req, res, next) => {
+    const id = Number(req.params.id)
+    posts.remove(id).then(() => {
+      res.send(helpers.makeEmptyResponse())
+    }).catch((next))
+  })
+
+module.exports = app

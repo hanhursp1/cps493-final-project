@@ -57,5 +57,10 @@ export async function login(username: string, password: string): Promise<LoginSt
   if (!usr.isSuccess) {
     return LoginStatus.InvalidUser
   }
+  store.state.user = {
+    id: usr.data.id,
+    token: usr.data.token,
+    userData: usr.data
+  }
   return LoginStatus.Ok
 }

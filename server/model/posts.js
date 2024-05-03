@@ -11,7 +11,11 @@ const fileName = __dirname + "/../data/posts.json"
 /**
  * @type {Promise<{items: Post[]}>}
  */
-const dataP = data.getData(fileName)
+let dataP = data.getData(fileName)
+
+async function refresh() {
+  dataP = data.getData(fileName)
+}
 
 /**
  * 
@@ -55,6 +59,7 @@ async function create(submission) {
   posts.items.push(newPost)
   try {
     await data.saveData(fileName, posts)
+    refresh()
   } catch(err) {
     console.log(err)
     throw new Error("Could not create post")

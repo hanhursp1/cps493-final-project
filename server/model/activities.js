@@ -10,7 +10,11 @@ const fileName = __dirname + "/../data/users.json"
 /**
  * @type {Promise<{items: Activity[]}>}
  */
-const dataP = data.getData(fileName)
+let dataP = data.getData(fileName)
+
+async function refresh() {
+  dataP = data.getData(fileName)
+}
 
 /**
  * 
@@ -50,6 +54,7 @@ async function create(submission) {
   acts.items.push(newAct)
   try {
     await data.saveData(fileName, acts)
+    refresh()
   } catch(err) {
     console.error(err)
     throw new Error("Could not create activity")
@@ -74,6 +79,7 @@ async function remove(id) {
   }
   try {
     await data.saveData(fileName, acts)
+    refresh()
   } catch(err) {
     console.log(err)
     throw new Error("Failed to delete activity")
@@ -81,6 +87,7 @@ async function remove(id) {
 }
 
 module.exports = {
+  refresh,
   getAll,
   get,
   create,

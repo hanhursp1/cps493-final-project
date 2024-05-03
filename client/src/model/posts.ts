@@ -68,6 +68,10 @@ export function getReplies(): Reply[] {
 // Returns true if the task succeeded
 export async function createPost(post: Submission): Promise<boolean> {
   const newPost = await apiPost<Submission, Post>("posts", post)
+  if (newPost.isSuccess && store.state) {
+    // Update posts after submitting a new post
+    store.state.posts = await getPostsRaw()
+  }
   return newPost.isSuccess
 }
 

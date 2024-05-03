@@ -2,13 +2,14 @@
   "items": [
     {
       "id": 0,
+      "status": 0,
       "username": "admin",
       "displayname": "System",
       "name": {
         "first": "",
         "last": ""
       },
-      "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
+      "token": "d55e6a8c0f30870be24c37098273afb1dc877a5544f049f86ef0cdd7201b937c",
       "privilege": 2,
       "posts": [1],
       "activities": [],
@@ -16,12 +17,13 @@
     },
     {
       "id": 1,
+      "status": 0,
       "username": "hanhursp1",
       "name": {
         "first": "Philip",
         "last": "Hanhurst"
       },
-      "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
+      "token": "d55e6a8c0f30870be24c37098273afb1dc877a5544f049f86ef0cdd7201b937c",
       "pfp": "./users/photo.jpg",
       "privilege": 1,
       "posts": [0],
@@ -30,12 +32,13 @@
     },
     {
       "id": 2,
+      "status": 0,
       "username": "totally_an_admin123",
       "name": {
         "first": "Lee",
         "last": "Zard"
       },
-      "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
+      "token": "d55e6a8c0f30870be24c37098273afb1dc877a5544f049f86ef0cdd7201b937c",
       "pfp": "./users/he_stole_my_nugget.jpg",
       "privilege": 0,
       "posts": [2],
@@ -49,7 +52,7 @@
         "first": "John",
         "last": "Doe"
       },
-      "token": "729e344a01e52c822bdfdec61e28d6eda02658d2e7d2b80a9b9029f41e212dde",
+      "token": "d55e6a8c0f30870be24c37098273afb1dc877a5544f049f86ef0cdd7201b937c",
       "pfp": "./users/low_quality_man.jpg",
       "privilege": 0,
       "posts": [3],
