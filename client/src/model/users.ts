@@ -1,6 +1,7 @@
-import users from '@/data/users.json'
-import usernamemap from '@/data/usernamemap.json'
+// import users from '@/data/users.json'
+// import usernamemap from '@/data/usernamemap.json'
 import store from '@/store'
+import { apiGet } from './fetch'
 
 // User access level
 export enum UserPrivilege {
@@ -49,8 +50,9 @@ export function getConcatName(user: User): string {
 }
 
 // Gets the users array from the json, meant for store initialization
-export function getUsersRaw(): User[] {
-  return users.items as User[]
+export async function getUsersRaw(): Promise<User[]> {
+  const users = await apiGet<User[]>("posts")
+  return users.isSuccess ? users.data : []
 }
 
 // Gets the cached users from the store
@@ -64,8 +66,13 @@ export function getUser(userID: number): User | undefined {
 }
 
 // Returns a users's ID based on their username
-export function getUserID(username: string): number | undefined {
-  return store.state ? store.state.usernameMap.get(username) : undefined
+export async function getUserID(username: string): Promise<number | undefined> {
+  const users = await apiGet<User[]>("search?q=" + username)
+  if (!users.isSuccess) {
+    return undefined
+  }
+  const found = users.data.find(user => user.username === username)
+  return found ? found.id : undefined
 }
 
 export function currentUser(): User | undefined {

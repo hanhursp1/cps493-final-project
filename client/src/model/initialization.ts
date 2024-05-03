@@ -6,12 +6,12 @@ import { getActivitiesRaw } from "./activities";
 import { ref } from "vue";
 
 // Returns default store with initialized data.
-export function initStore(): StoreData {
+export async function initStore(): Promise<StoreData> {
   return {
-    users: getUsersRaw(),
-    usernameMap: getUsernameMap(),
-    posts: getPostsRaw(),
-    replies: getRepliesRaw(),
-    activities: getActivitiesRaw()
+    users: await getUsersRaw(),
+    // usernameMap: getUsernameMap(),
+    posts: await getPostsRaw(),
+    replies: await getRepliesRaw(),
+    activities: await getActivitiesRaw()
   }
 }

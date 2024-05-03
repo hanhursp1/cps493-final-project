@@ -7,7 +7,7 @@ import type { Activity } from "@/model/activities"
 export type StoreData = {
   user?: UserSession    // User session data. Will be undefined if user is not logged in
   users: User[]         // Array of cached users
-  usernameMap: Map<string, number>  // Map of usernames to IDs. Used when logging in
+  // usernameMap: Map<string, number>  // Map of usernames to IDs. Used when logging in
   posts: Post[]         // Array of cached posts. Is a ref because we use it directly
   replies: Reply[]      // Array of cached replies
   activities: Activity[]

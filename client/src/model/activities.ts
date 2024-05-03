@@ -1,5 +1,6 @@
-import activities from '@/data/activities.json'
+// import activities from '@/data/activities.json'
 import store from '@/store'
+import { apiGet } from './fetch'
 
 export enum Visibility {
   Public = 0,
@@ -42,8 +43,9 @@ export function createSummary(act: Activity): Summary {
 
 // Get raw activities array from json.
 // Only meant to be used by the store initializer.
-export function getActivitiesRaw(): Activity[] {
-  return activities.items
+export async function getActivitiesRaw(): Promise<Activity[]> {
+  const acts = await apiGet<Activity[]>("activities")
+  return acts.isSuccess ? acts.data : []
 }
 
 export function getActivities(): Activity[] {

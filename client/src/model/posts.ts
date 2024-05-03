@@ -36,33 +36,33 @@ export interface Submission {
 
 // Get raw replies array from json.
 // Meant only to be used by the store initializer.
-// export function getPostsRaw(): Post[] {
-//   return posts.items
-// }
-
-// Get posts. Currently, gets all the posts from the store
-export async function getPosts(): Promise<Post[]> {
-  // return store.state ? store.state.posts : []
+export async function getPostsRaw(): Promise<Post[]> {
   const posts = await apiGet<Post[]>("posts")
   return posts.isSuccess ? posts.data : []
 }
 
-export async function getPost(id: number): Promise<Post|undefined> {
-  const post = await apiGet<Post>("posts/" + Number(id|0))
-  return post.isSuccess ? post.data : undefined
+// Get posts. Currently, gets all the posts from the store
+export function getPosts(): Post[] {
+  return store.state ? store.state.posts : []
+}
+
+export function getPost(id: number): Post|undefined {
+  return store.state ? store.state.posts[id] : undefined
 }
 
 // Get raw replies array from json.
 // Much like `getPostsRaw`, this is only meant to
 // be used by the store initializer.
-// export function getRepliesRaw(): Reply[] {
-//   return replies.items
-// }
+// Replies have not been implemented yet.
+export async function getRepliesRaw(): Promise<Reply[]> {
+  // const replies = await apiGet<Reply[]>("replies")
+  return [] as Reply[]
+}
 
 // Get all replies. Currently gets from the store
-// export function getReplies(): Reply[] {
-//   return store.state ? store.state.replies : []
-// }
+export function getReplies(): Reply[] {
+  return store.state ? store.state.replies : []
+}
 
 // Create a post and add it to the store
 // Returns true if the task succeeded

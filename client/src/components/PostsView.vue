@@ -5,6 +5,8 @@ import { computed } from 'vue'
 import PostCard from './PostCard.vue';
 import WorkoutCard from './WorkoutCard.vue'
 
+
+
 const posts = computed(getPosts)
 </script>
 
