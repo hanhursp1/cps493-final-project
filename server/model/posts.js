@@ -54,7 +54,7 @@ async function create(submission) {
     likedBy: [],
     replies: [],
     attachments: submission.attachments,
-    activityID: act.id
+    activityID: act ? act.id : undefined
   }
   posts.items.push(newPost)
   try {

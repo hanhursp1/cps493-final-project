@@ -51,7 +51,7 @@ export function getConcatName(user: User): string {
 
 // Gets the users array from the json, meant for store initialization
 export async function getUsersRaw(): Promise<User[]> {
-  const users = await apiGet<User[]>("posts")
+  const users = await apiGet<User[]>("users")     /// YOU MOTEHRFUCKER
   return users.isSuccess ? users.data : []
 }
 
@@ -62,6 +62,7 @@ export function getUsers(): User[] {
 
 // Returns a user based on their ID
 export function getUser(userID: number): User | undefined {
+  if (store.state) console.log(store.state.users.length)
   return store.state ? store.state.users[userID] : undefined
 }
 
@@ -84,7 +85,7 @@ export function currentUserID(): number {
 }
 
 export function isLoggedIn(): boolean {
-  return store.state?.user !== undefined;
+  return store.state?.user != undefined;
 }
 
 export function getPFP(user: User | undefined): string {

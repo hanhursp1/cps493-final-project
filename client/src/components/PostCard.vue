@@ -8,7 +8,12 @@ const props = defineProps<{
   post: Post
 }>()
 
-// This should be safe since every post should have a valid user ID attached
+// I'm gonna leave this comment here, since it ended up being
+// hilariously prophetic:
+// "This should be safe since every post should have a valid user ID attached"
+
+// For some reason this function was returning a Post???? Instead of a User????
+// Javascript is just a spaghetti factory, I hate this
 const poster = getUser(props.post.posterID) as User
 const canEdit = (poster && (currentUser()?.id == poster?.id) && (poster.privilege >= UserPrivilege.PremiumUser)) ||
         (currentUser()?.privilege == UserPrivilege.Admin)

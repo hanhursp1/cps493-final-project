@@ -15,7 +15,7 @@ const props = defineProps<{
 const poster = getUser(props.post.posterID) as User
 // This is safe since ideally this component should only exist when activityID isn't undefined
 const workoutID = props.post.activityID as number
-const workout = getActivityByID(workoutID) as Activity
+const workout = getActivityByID(workoutID)
 const posterName = poster?.displayname ? poster.displayname : poster?.name.first + " " + poster?.name.last
 
 const userPFP = poster.pfp ? poster.pfp : './users/admin.png'

@@ -47,6 +47,7 @@
     },
     {
       "id": 3,
+      "status": 0,
       "username": "normalguy1",
       "name": {
         "first": "John",

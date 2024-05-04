@@ -57,7 +57,7 @@ async function getNextID() {
  * @returns {Promise<User[]>}
  */
 async function getAll() {
-  return (await dataP).items.filter(user => user.status == 0).map(x => sanitizeUser(x))
+  return (await dataP).items.map(x => sanitizeUser(x))
 }
 
 /**
@@ -293,9 +293,9 @@ async function verifyAdmin(admin) {
 async function login(username, password) {
   const users = await dataP
   const passHash = await hashPassword(password)
-  console.log(username)
-  console.log(password)
-  console.log(passHash)
+  // console.log(username)
+  // console.log(password)
+  // console.log(passHash)
   const user = users.items.find(item => item.status == 0 && (item.username === username && item.token === passHash))
   // console.log(user)
   if (!user) throw new Error("Invalid email or password")

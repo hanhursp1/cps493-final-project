@@ -14,9 +14,7 @@ let username = ref("")
 let password = ref("")
 
 // Holy fuck
-const validUsername = computed(
-  () => username.value === "" ? undefined : (getUserID(username.value) !== undefined)
-)
+const validUsername = ref(true)
 
 // Submit the user's login info and display an error based on the response.
 async function submit() {

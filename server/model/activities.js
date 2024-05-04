@@ -5,7 +5,7 @@ const data = require('./data')
  * @typedef {import('../../client/src/model/activities').ActivitySubmission} ActivitySubmission
  */
 
-const fileName = __dirname + "/../data/users.json"
+const fileName = __dirname + "/../data/activities.json"
 
 /**
  * @type {Promise<{items: Activity[]}>}
