@@ -1,7 +1,8 @@
 // import users from '@/data/users.json'
 // import usernamemap from '@/data/usernamemap.json'
 import store from '@/store'
-import { apiGet } from './fetch'
+import { apiDelete, apiGet, apiPost } from './fetch'
+import { useRouter } from 'vue-router'
 
 // User access level
 export enum UserPrivilege {
@@ -45,13 +46,31 @@ export interface UserSession {
   userData: User// The user's data (Will likely be removed in the future for security)
 }
 
+export interface Registration {
+  username: string
+  password: string
+  name: Name
+}
+
+export enum RegistrationResult {
+  Success = 0,
+  AlreadyExists,
+  Exception
+}
+
+export enum LoginStatus {
+  Ok = 0,
+  InvalidPassword,
+  InvalidUser
+}
+
 export function getConcatName(user: User): string {
   return user?.displayname ? user.displayname : user?.name.first + " " + user?.name.last
 }
 
 // Gets the users array from the json, meant for store initialization
 export async function getUsersRaw(): Promise<User[]> {
-  const users = await apiGet<User[]>("users")     /// YOU MOTEHRFUCKER
+  const users = await apiGet<User[]>("users")
   return users.isSuccess ? users.data : []
 }
 
@@ -63,17 +82,24 @@ export function getUsers(): User[] {
 // Returns a user based on their ID
 export function getUser(userID: number): User | undefined {
   if (store.state) console.log(store.state.users.length)
-  return store.state ? store.state.users[userID] : undefined
+  const result = store.state ? store.state.users[userID] : undefined
+  if (result && result.status == 0) return result
+  return undefined
 }
 
 // Returns a users's ID based on their username
-export async function getUserID(username: string): Promise<number | undefined> {
-  const users = await apiGet<User[]>("users/search?q=" + username)
-  if (!users.isSuccess) {
-    return undefined
+export function getUserID(username: string): number | undefined {
+  // const users = await apiGet<User[]>("users/search?q=" + username)
+  // if (!users.isSuccess) {
+  //   return undefined
+  // }
+  // const found = users.data.find(user => user.username === username)
+  // return found ? found.id : undefined
+  if (store.state) {
+    const id = store.state.users.findIndex(it => it.username == username)
+    if (id != -1) return id
   }
-  const found = users.data.find(user => user.username === username)
-  return found ? found.id : undefined
+  return undefined
 }
 
 export function currentUser(): User | undefined {
@@ -92,8 +118,61 @@ export function getPFP(user: User | undefined): string {
   return user?.pfp ? user.pfp : './users/admin.png'
 }
 
-export function removeUser(id: number) {
-  if (store.state) {
-    store.state.users[id] = undefined as unknown as User
+export async function removeUser(id: number) {
+  const result = await apiDelete<void, boolean>("users/" + id)
+  if (result.isSuccess && store.state) {
+    store.state.users[id] = {
+      id,
+      status: 2
+    } as User
   }
+}
+
+export function userIsActive(user: User|undefined) {
+  return user !== undefined && user.status == 0
+}
+
+export function useLogin() {
+  const router = useRouter()
+  return {
+    async login(username: string, password: string) {
+      const result = await loginImpl(username, password)
+      if (result == LoginStatus.Ok) {
+        router.push("home")
+      }
+      return result
+    },
+    async register(info: Registration) {
+      const result = await registerImpl(info)
+      if (result == RegistrationResult.Success) {
+        router.push("home")
+      }
+      return result
+    }
+  }
+}
+
+async function registerImpl(info: Registration): Promise<RegistrationResult> {
+  const result = await apiPost<Registration, boolean>("users/register", info)
+  if (result.isSuccess) {
+    if (result.data) {
+      return RegistrationResult.AlreadyExists
+    }
+    return RegistrationResult.Success
+  }
+  return RegistrationResult.Exception
+}
+
+// Verify the user's login
+async function loginImpl(username: string, password: string): Promise<LoginStatus> {
+  if (!store.state) {
+    throw new Error("InvalidStore")
+  }
+
+  const usr = await apiPost<{username: string, password: string}, UserSession>("users/login", {username, password})
+  if (!usr.isSuccess) {
+    return LoginStatus.InvalidUser
+  }
+  store.state.user = usr.data
+  return LoginStatus.Ok
 }

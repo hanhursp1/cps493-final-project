@@ -3,6 +3,8 @@ const sha = require('@aws-crypto/sha256-js')
 
 /**
  * @typedef {import('../../client/src/model/users').User} User
+ * @typedef {import('../../client/src/model/users').UserSession} UserSession
+ * @typedef {import('../../client/src/model/users').Registration} Registration
  */
 
 const fileName = __dirname + "/../data/users.json"
@@ -288,7 +290,7 @@ async function verifyAdmin(admin) {
  * 
  * @param {string} username 
  * @param {string} password 
- * @returns {Promise<User>}
+ * @returns {Promise<UserSession>}
  */
 async function login(username, password) {
   const users = await dataP
@@ -299,26 +301,37 @@ async function login(username, password) {
   const user = users.items.find(item => item.status == 0 && (item.username === username && item.token === passHash))
   // console.log(user)
   if (!user) throw new Error("Invalid email or password")
-  return user
+  return {
+    id: user.id,
+    token: user.token,
+    userData: user
+  }
 }
 
 /**
  * 
- * @param {*} info 
- * @param {*} username 
- * @param {*} password 
+ * @param {Registration} info
  */
 
-async function register(info, username, password) {
+async function register(info) {
+  let users = await dataP
+  let hasSameUsername = users.items.findIndex(it => it.username == info.username)
+  if (hasSameUsername != -1) {
+    // throw new Error("User already exists")
+    return true
+  }
   /** @type {User} */
   let user = {
-    ...defaultUser,
-    username: username,
-    token: await hashPassword(password),
-    ...info,
-    id: await getNextID()
+    id: await getNextID(),
+    status: 0,
+    username: info.username,
+    name: info.name,
+    token: await hashPassword(info.password),
+    privilege: 0,
+    posts: [],
+    activities: [],
+    friends: []
   }
-  let users = await dataP
   users.items.push(user)
   try {
     await data.saveData(fileName, users)
@@ -327,6 +340,7 @@ async function register(info, username, password) {
     console.error(err)
     throw new Error("Something went wrong with the registration")
   }
+  return false
 }
 
 module.exports = {

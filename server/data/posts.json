@@ -2,6 +2,7 @@
   "items": [
     {
       "postID": 0,
+      "removed": false,
       "posterID": 1,
       "timestamp": 0,
       "body": "Hello world! We're currently experimenting with the site.",
@@ -11,6 +12,7 @@
     },
     {
       "postID": 1,
+      "removed": false,
       "posterID": 0,
       "timestamp": 0,
       "body": "Announcement to all users:\nIf you see a lizard posing as an admin do NOT trust them! Admins will always have a green shield next to their names.",
@@ -20,6 +22,7 @@
     },
     {
       "postID": 2,
+      "removed": false,
       "posterID": 2,
       "timestamp": 0,
       "body": "Hee hee I'm an admin I'm gonna ban ya",
@@ -29,6 +32,7 @@
     },
     {
       "postID": 3,
+      "removed": false,
       "posterID": 3,
       "timestamp": 0,
       "body": "Cycling with friends!",

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { removeUser, getConcatName, type User, currentUser } from '@/model/users';
+import { removeUser, getConcatName, type User, currentUser, userIsActive } from '@/model/users';
 
 const props = defineProps<{
   user: User
@@ -23,7 +23,7 @@ function editUser() {
 </script>
 
 <template>
-  <tr v-if="user !== undefined">
+  <tr v-if="userIsActive(user)">
     <td><figure class="image is-48x48"><img :src="userPFP"></figure></td>
     <td>{{ user.username }}</td>
     <td>{{ getConcatName(user) }}</td>

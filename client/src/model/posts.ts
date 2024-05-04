@@ -8,6 +8,7 @@ import { createActivity, type ActivitySubmission } from './activities'
 /* TYPES */
 export interface Post {
   postID: number        // ID of the post
+  removed?: boolean
   posterID: number      // ID of the poster
   timestamp: number     // Unix timestamp of the post
   body: string          // Text contents of the post
@@ -47,7 +48,9 @@ export function getPosts(): Post[] {
 }
 
 export function getPost(id: number): Post|undefined {
-  return store.state ? store.state.posts[id] : undefined
+  const result = store.state ? store.state.posts[id] : undefined
+  if (result && !result.removed) return result
+  return undefined
 }
 
 // Get raw replies array from json.
@@ -94,7 +97,14 @@ export async function deletePost(id: number) {
   //   store.state.posts[id] = undefined as unknown as Post
   // }
   const result = await apiDelete<void, void>("posts/" + id)
-  if (!result.isSuccess) {
-    
+  if (result.isSuccess && store.state) {
+    store.state.posts[id] = {
+      postID: id,
+      removed: true
+    } as Post
   }
+}
+
+export function postIsActive(post: Post | undefined) {
+  return post && !post.removed
 }

@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import type { Post } from '@/model/posts';
-import { getUser, currentUser, type User } from '@/model/users';
+import { postIsActive, type Post } from '@/model/posts';
+import { getUser, currentUser, type User, userIsActive } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PrivilegeIcon from '@/components/PrivilegeIcon.vue'
 import PostFooter from './PostFooter.vue';
+import { ref } from 'vue';
 const props = defineProps<{
   post: Post
 }>()
+
+const postExists = postIsActive(props.post)
 
 // I'm gonna leave this comment here, since it ended up being
 // hilariously prophetic:
@@ -23,7 +26,7 @@ const posterName = poster?.displayname ? poster.displayname : poster?.name.first
 </script>
 
 <template>
-  <div class="card post" v-if="post !== undefined && poster !== undefined">
+  <div class="card post" v-if="postExists && userIsActive(poster)">
     <div class="card-content">
       <div class="media">
         <div class="media-left">

@@ -79,7 +79,15 @@ async function remove(id) {
   }
   // @ts-ignore
   posts.items[id] = {
-    postID: id
+    postID: id,
+    removed: true
+  }
+  try {
+    await data.saveData(fileName, posts)
+    refresh()
+  } catch(err) {
+    console.log(err)
+    throw new Error("Could not delete post")
   }
 }
 

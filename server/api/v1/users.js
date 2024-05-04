@@ -4,9 +4,7 @@ const users = require('../../model/users')
 
 /**
  * @typedef {import('../../../client/src/model/users').User} User
- */ 
-/**
- * @typedef {import('../../../client/src/model/registration').Signup} Signup
+ * @typedef {import('../../../client/src/model/users').Registration} Registration
  */ 
 /**
  * @template T
@@ -49,7 +47,7 @@ app
   })
   .delete("/:id", (req, res, next) => {
     const id = Number(req.params.id)
-    const admin = req.body
+    // const admin = req.body
     users.remove(id).then(result => {
       res.send(helpers.makeResponse(result))
     }).catch(next)
@@ -62,8 +60,15 @@ app
       res.send(helpers.makeResponse(user))
     }).catch(next)
   })
-  // .post("/register", (req, res, next) => {
-
-  // })
+  .post("/register", (req, res, next) => {
+    /** @type {Registration} */
+    const regInfo = req.body
+    if (!regInfo.name || !regInfo.password || !regInfo.username) {
+      throw new Error("Incomplete registration information")
+    }
+    users.register(regInfo).then(userExists => {
+      res.send(helpers.makeResponse(userExists))
+    }).catch(next)
+  })
 
 module.exports = app

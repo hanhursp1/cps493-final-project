@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useLogin } from '@/model/users';
+
 </script>
 
 <template>

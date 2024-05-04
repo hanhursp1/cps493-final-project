@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { hashPassword, login } from '@/model/password'
-import { LoginStatus } from '@/model/password'
-import { getUserID } from '@/model/users'
-import router from '@/router'
+import { LoginStatus } from '@/model/users'
+import { getUserID, useLogin } from '@/model/users'
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router';
 
 let isLoading = ref(false)
 let loginResponse = ref({
@@ -13,8 +12,10 @@ let loginResponse = ref({
 let username = ref("")
 let password = ref("")
 
-// Holy fuck
+//TODO: Remove this
 const validUsername = ref(true)
+
+const {login, register} = useLogin()
 
 // Submit the user's login info and display an error based on the response.
 async function submit() {
@@ -25,7 +26,8 @@ async function submit() {
   switch(loginRes) {
     case LoginStatus.Ok:
       loginResponse.value.badLogin = false
-      router.push('home')
+      const router = useRouter()
+      router.push("home")
       break
     case LoginStatus.InvalidPassword:
       loginResponse.value.reason = "Incorrect passoword!"
