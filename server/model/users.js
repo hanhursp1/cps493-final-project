@@ -119,6 +119,12 @@ function sanitizeUserForUpdate(user) {
   }
 }
 
+/**
+ * 
+ * @param {User} user 
+ * @param {number} id 
+ * @returns 
+ */
 async function update(user, id = null) {
   const users = await dataP
   const index = id ?? user.id

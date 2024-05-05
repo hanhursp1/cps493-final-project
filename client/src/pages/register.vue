@@ -122,19 +122,19 @@ async function submit() {
       <div class="field">
         <label class="label">Password</label>
         <div class="control">
-          <input type="text" class="input" v-model="info.password">
+          <input type="password" class="input" v-model="info.password">
         </div>
       </div>
-      <div class="field">
+      <div class="field">password
         <label class="label">Confirm Password</label>
         <div class="control">
-          <input type="text" class="input" :class="{'is-danger': !validPassword}" v-model="confirmPassword">
+          <input type="password" class="input" :class="{'is-danger': !validPassword}" v-model="confirmPassword">
         </div>
         <p class="help" v-if="!validPassword">Passwords must match!</p>
       </div>
       <div class="field">
         <div class="control" v-if="!isLoading">
-          <button class="button is-link" @click="submit()">Log in</button>
+          <button class="button is-link" @click="submit()">Sign up</button>
         </div>
         <div v-else>
           <progress class="progress is-medium is-primary"></progress>

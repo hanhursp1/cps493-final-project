@@ -1,4 +1,5 @@
 const data = require('./data')
+const users = require('./users')
 const activities = require('./activities')
 
 /**
@@ -41,9 +42,11 @@ async function get(id) {
  */
 async function create(submission) {
   const posts = await dataP
+  const poster = await users.get(submission.posterID)
   let act
   if (submission.activity) {
     act = await activities.create(submission.activity)
+    poster.activities.push(act.id)
   }
   /** @type {Post} */
   let newPost = {
@@ -57,10 +60,12 @@ async function create(submission) {
     attachments: submission.attachments,
     activityID: act ? act.id : undefined
   }
+  poster.posts.push(newPost.postID)
   posts.items.push(newPost)
   try {
     await data.saveData(fileName, posts)
     refresh()
+    users.update(poster)
   } catch(err) {
     console.log(err)
     throw new Error("Could not create post")

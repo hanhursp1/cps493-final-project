@@ -145,6 +145,7 @@ export function useLogin() {
     async register(info: Registration) {
       const result = await registerImpl(info)
       if (result == RegistrationResult.Success) {
+        loginImpl(info.username, info.password)
         router.push("home")
       }
       return result
