@@ -1,0 +1,6 @@
+{
+  "compilerOptions": {
+    "checkJs": true,     // This is vital to my sanity
+    "resolveJsonModule": true
+  }
+}

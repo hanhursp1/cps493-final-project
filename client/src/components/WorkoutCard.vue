@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { createSummary, getActivityByID, type Activity, type Summary } from '@/model/activities';
-import type { Post } from '@/model/posts';
-import { getUser, currentUser, type User } from '@/model/users';
+import { postIsActive, type Post } from '@/model/posts';
+import { getUser, currentUser, type User, userIsActive } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PostFooter from '@/components/PostFooter.vue'
-import ActivityStats from './ActivityStats.vue';
-import PrivilegeIcon from './PrivilegeIcon.vue';
+import ActivityStats from '@/components/ActivityStats.vue';
+import PrivilegeIcon from '@/components/PrivilegeIcon.vue';
+import LikesView from '@/components/LikesView.vue';
 
 
 const props = defineProps<{
@@ -15,14 +16,15 @@ const props = defineProps<{
 const poster = getUser(props.post.posterID) as User
 // This is safe since ideally this component should only exist when activityID isn't undefined
 const workoutID = props.post.activityID as number
-const workout = getActivityByID(workoutID) as Activity
+const workout = getActivityByID(workoutID)
 const posterName = poster?.displayname ? poster.displayname : poster?.name.first + " " + poster?.name.last
 
 const userPFP = poster.pfp ? poster.pfp : './users/admin.png'
+const postExists = postIsActive(props.post)
 </script>
 
 <template>
-  <div class="card workout" v-if="post !== undefined && poster !== undefined">
+  <div class="card workout" v-if="postExists && userIsActive(poster)">
     <div class="card-image" v-if="workout.photo !== undefined">
       <figure class="image is-2by1">
         <img :src="workout.photo" :alt="workout.name + ' workout photo. Posted by ' + posterName">
@@ -48,6 +50,7 @@ const userPFP = poster.pfp ? poster.pfp : './users/admin.png'
       <div class="content">
         <p>{{ post.body }}</p>
       </div>
+      <LikesView :post="post" />
     </div>
     <PostFooter :post="post" :poster="poster" />
   </div>

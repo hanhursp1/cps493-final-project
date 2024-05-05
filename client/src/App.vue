@@ -4,7 +4,13 @@ import Navbar from '@/components/NavbarComponent.vue'
 import store from '@/store';
 import { initStore } from '@/model/initialization';
 
-if (!store.state) store.state = initStore()
+if (!store.state) {
+  initStore().then(state => {
+    console.log("store.state initialized!")
+    store.state = state
+    console.log(store.state)
+  })
+}
 </script>
 
 <template>

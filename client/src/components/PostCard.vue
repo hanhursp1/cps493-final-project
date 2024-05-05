@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import type { Post } from '@/model/posts';
-import { getUser, currentUser, type User } from '@/model/users';
+import { postIsActive, type Post } from '@/model/posts';
+import { getUser, currentUser, type User, userIsActive } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PrivilegeIcon from '@/components/PrivilegeIcon.vue'
-import PostFooter from './PostFooter.vue';
+import PostFooter from '@/components/PostFooter.vue';
+import { computed, ref } from 'vue';
+import LikeIcon from '@/components/LikeIcon.vue';
+import LikesView from '@/components/LikesView.vue';
 const props = defineProps<{
   post: Post
 }>()
 
-// This should be safe since every post should have a valid user ID attached
+const postExists = postIsActive(props.post)
+
+// I'm gonna leave this comment here, since it ended up being
+// hilariously prophetic:
+// "This should be safe since every post should have a valid user ID attached"
+
+// For some reason this function was returning a Post???? Instead of a User????
+// Javascript is just a spaghetti factory, I hate this
 const poster = getUser(props.post.posterID) as User
 const canEdit = (poster && (currentUser()?.id == poster?.id) && (poster.privilege >= UserPrivilege.PremiumUser)) ||
         (currentUser()?.privilege == UserPrivilege.Admin)
@@ -18,7 +28,7 @@ const posterName = poster?.displayname ? poster.displayname : poster?.name.first
 </script>
 
 <template>
-  <div class="card post" v-if="post !== undefined && poster !== undefined">
+  <div class="card post" v-if="postExists && userIsActive(poster)">
     <div class="card-content">
       <div class="media">
         <div class="media-left">
@@ -34,19 +44,13 @@ const posterName = poster?.displayname ? poster.displayname : poster?.name.first
       <div class="content">
         <p>{{ post.body }}</p>
       </div>
+      <LikesView :post="post" />
     </div>
     <PostFooter :post="post" :poster="poster" />
   </div>
 </template>
 
 <style scoped>
-.pfp {
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  object-fit: cover;
-}
-
 .post {
   margin-top: 10px;
 }

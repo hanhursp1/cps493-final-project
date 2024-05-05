@@ -1,12 +1,20 @@
-import users from '@/data/users.json'
-import usernamemap from '@/data/usernamemap.json'
+// import users from '@/data/users.json'
+// import usernamemap from '@/data/usernamemap.json'
 import store from '@/store'
+import { apiDelete, apiGet, apiPost } from './fetch'
+import { useRouter } from 'vue-router'
 
 // User access level
 export enum UserPrivilege {
   FreeUser = 0,
   PremiumUser,
   Admin
+}
+
+export enum UserStatus {
+  Active = 0,
+  Deleted,
+  Deactivated
 }
 
 // Name type containing first middle and last
@@ -19,6 +27,7 @@ export type Name = {
 // User type, as stored in the database
 export interface User {
   id: number            // User ID
+  status: UserStatus    // Whether or not the user is active or inactive
   username: string      // User's username, used to login
   displayname?: string  // If undefined, use the user's real name
   name: Name            // User's full name
@@ -37,13 +46,32 @@ export interface UserSession {
   userData: User// The user's data (Will likely be removed in the future for security)
 }
 
+export interface Registration {
+  username: string
+  password: string
+  name: Name
+}
+
+export enum RegistrationResult {
+  Success = 0,
+  AlreadyExists,
+  Exception
+}
+
+export enum LoginStatus {
+  Ok = 0,
+  InvalidPassword,
+  InvalidUser
+}
+
 export function getConcatName(user: User): string {
   return user?.displayname ? user.displayname : user?.name.first + " " + user?.name.last
 }
 
 // Gets the users array from the json, meant for store initialization
-export function getUsersRaw(): User[] {
-  return users.items as User[]
+export async function getUsersRaw(): Promise<User[]> {
+  const users = await apiGet<User[]>("users")
+  return users.isSuccess ? users.data : []
 }
 
 // Gets the cached users from the store
@@ -53,12 +81,25 @@ export function getUsers(): User[] {
 
 // Returns a user based on their ID
 export function getUser(userID: number): User | undefined {
-  return store.state ? store.state.users[userID] : undefined
+  if (store.state) console.log(store.state.users.length)
+  const result = store.state ? store.state.users[userID] : undefined
+  if (result && result.status == 0) return result
+  return undefined
 }
 
 // Returns a users's ID based on their username
 export function getUserID(username: string): number | undefined {
-  return store.state ? store.state.usernameMap.get(username) : undefined
+  // const users = await apiGet<User[]>("users/search?q=" + username)
+  // if (!users.isSuccess) {
+  //   return undefined
+  // }
+  // const found = users.data.find(user => user.username === username)
+  // return found ? found.id : undefined
+  if (store.state) {
+    const id = store.state.users.findIndex(it => it.username == username)
+    if (id != -1) return id
+  }
+  return undefined
 }
 
 export function currentUser(): User | undefined {
@@ -66,19 +107,73 @@ export function currentUser(): User | undefined {
 }
 
 export function currentUserID(): number {
-  return store.state?.user?.id ? store.state.user.id : -1
+  return store.state?.user ? store.state.user.id : -1
 }
 
 export function isLoggedIn(): boolean {
-  return store.state?.user !== undefined;
+  return store.state?.user != undefined;
 }
 
 export function getPFP(user: User | undefined): string {
   return user?.pfp ? user.pfp : './users/admin.png'
 }
 
-export function removeUser(id: number) {
-  if (store.state) {
-    store.state.users[id] = undefined as unknown as User
+export async function removeUser(id: number) {
+  const result = await apiDelete<void, boolean>("users/" + id)
+  if (result.isSuccess && store.state) {
+    store.state.users[id] = {
+      id,
+      status: 2
+    } as User
   }
+}
+
+export function userIsActive(user: User|undefined) {
+  return user !== undefined && user.status == 0
+}
+
+export function useLogin() {
+  const router = useRouter()
+  return {
+    async login(username: string, password: string) {
+      const result = await loginImpl(username, password)
+      if (result == LoginStatus.Ok) {
+        router.push("home")
+      }
+      return result
+    },
+    async register(info: Registration) {
+      const result = await registerImpl(info)
+      if (result == RegistrationResult.Success) {
+        loginImpl(info.username, info.password)
+        router.push("home")
+      }
+      return result
+    }
+  }
+}
+
+async function registerImpl(info: Registration): Promise<RegistrationResult> {
+  const result = await apiPost<Registration, boolean>("users/register", info)
+  if (result.isSuccess) {
+    if (result.data) {
+      return RegistrationResult.AlreadyExists
+    }
+    return RegistrationResult.Success
+  }
+  return RegistrationResult.Exception
+}
+
+// Verify the user's login
+async function loginImpl(username: string, password: string): Promise<LoginStatus> {
+  if (!store.state) {
+    throw new Error("InvalidStore")
+  }
+
+  const usr = await apiPost<{username: string, password: string}, UserSession>("users/login", {username, password})
+  if (!usr.isSuccess) {
+    return LoginStatus.InvalidUser
+  }
+  store.state.user = usr.data
+  return LoginStatus.Ok
 }

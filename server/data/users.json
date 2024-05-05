@@ -1,0 +1,92 @@
+{
+  "items": [
+    {
+      "id": 0,
+      "status": 0,
+      "username": "admin",
+      "displayname": "System",
+      "name": {
+        "first": "",
+        "last": ""
+      },
+      "token": "d55e6a8c0f30870be24c37098273afb1dc877a5544f049f86ef0cdd7201b937c",
+      "privilege": 2,
+      "posts": [
+        1
+      ],
+      "activities": [],
+      "friends": [
+        1
+      ]
+    },
+    {
+      "id": 1,
+      "status": 0,
+      "username": "hanhursp1",
+      "name": {
+        "first": "Philip",
+        "last": "Hanhurst"
+      },
+      "token": "d55e6a8c0f30870be24c37098273afb1dc877a5544f049f86ef0cdd7201b937c",
+      "pfp": "./users/photo.jpg",
+      "privilege": 1,
+      "posts": [
+        0
+      ],
+      "activities": [],
+      "friends": [
+        0
+      ]
+    },
+    {
+      "id": 2,
+      "status": 0,
+      "username": "totally_an_admin123",
+      "name": {
+        "first": "Lee",
+        "last": "Zard"
+      },
+      "token": "d55e6a8c0f30870be24c37098273afb1dc877a5544f049f86ef0cdd7201b937c",
+      "pfp": "./users/he_stole_my_nugget.jpg",
+      "privilege": 0,
+      "posts": [
+        2
+      ],
+      "activities": [],
+      "friends": []
+    },
+    {
+      "id": 3,
+      "status": 0,
+      "username": "normalguy1",
+      "name": {
+        "first": "John",
+        "last": "Doe"
+      },
+      "token": "d55e6a8c0f30870be24c37098273afb1dc877a5544f049f86ef0cdd7201b937c",
+      "pfp": "./users/low_quality_man.jpg",
+      "privilege": 0,
+      "posts": [
+        3
+      ],
+      "activities": [
+        0
+      ],
+      "friends": []
+    },
+    {
+      "id": 4,
+      "status": 0,
+      "username": "guyman",
+      "name": {
+        "first": "Some",
+        "last": "Guy"
+      },
+      "token": "82e35a63ceba37e9646434c5dd412ea577147f1e4a41ccde1614253187e3dbf9",
+      "privilege": 0,
+      "posts": [],
+      "activities": [],
+      "friends": []
+    }
+  ]
+}
