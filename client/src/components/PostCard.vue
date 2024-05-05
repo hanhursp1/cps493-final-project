@@ -6,7 +6,7 @@ import PrivilegeIcon from '@/components/PrivilegeIcon.vue'
 import PostFooter from '@/components/PostFooter.vue';
 import { computed, ref } from 'vue';
 import LikeIcon from '@/components/LikeIcon.vue';
-import LikesView from './LikesView.vue';
+import LikesView from '@/components/LikesView.vue';
 const props = defineProps<{
   post: Post
 }>()

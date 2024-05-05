@@ -4,8 +4,9 @@ import { postIsActive, type Post } from '@/model/posts';
 import { getUser, currentUser, type User, userIsActive } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PostFooter from '@/components/PostFooter.vue'
-import ActivityStats from './ActivityStats.vue';
-import PrivilegeIcon from './PrivilegeIcon.vue';
+import ActivityStats from '@/components/ActivityStats.vue';
+import PrivilegeIcon from '@/components/PrivilegeIcon.vue';
+import LikesView from '@/components/LikesView.vue';
 
 
 const props = defineProps<{
@@ -49,6 +50,7 @@ const postExists = postIsActive(props.post)
       <div class="content">
         <p>{{ post.body }}</p>
       </div>
+      <LikesView :post="post" />
     </div>
     <PostFooter :post="post" :poster="poster" />
   </div>

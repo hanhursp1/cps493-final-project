@@ -7,8 +7,7 @@
       "timestamp": 0,
       "body": "Hello world! We're currently experimenting with the site.",
       "likedBy": [
-        0,
-        1
+        0
       ],
       "replies": [],
       "attachments": []
@@ -39,7 +38,9 @@
       "posterID": 3,
       "timestamp": 0,
       "body": "Cycling with friends!",
-      "likedBy": [],
+      "likedBy": [
+        1
+      ],
       "replies": [],
       "attachments": [],
       "activityID": 0
