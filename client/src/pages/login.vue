@@ -26,8 +26,6 @@ async function submit() {
   switch(loginRes) {
     case LoginStatus.Ok:
       loginResponse.value.badLogin = false
-      const router = useRouter()
-      router.push("home")
       break
     case LoginStatus.InvalidPassword:
       loginResponse.value.reason = "Incorrect passoword!"

@@ -48,6 +48,7 @@ async function create(submission) {
   /** @type {Post} */
   let newPost = {
     postID: posts.items.length,
+    removed: false,
     posterID: submission.posterID,
     timestamp: Date.now(),
     body: submission.postBody,
