@@ -7,7 +7,8 @@
       "timestamp": 0,
       "body": "Hello world! We're currently experimenting with the site.",
       "likedBy": [
-        0
+        0,
+        1
       ],
       "replies": [],
       "attachments": []

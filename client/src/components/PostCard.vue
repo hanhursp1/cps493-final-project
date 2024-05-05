@@ -3,8 +3,10 @@ import { postIsActive, type Post } from '@/model/posts';
 import { getUser, currentUser, type User, userIsActive } from '@/model/users';
 import { UserPrivilege } from '@/model/users';
 import PrivilegeIcon from '@/components/PrivilegeIcon.vue'
-import PostFooter from './PostFooter.vue';
-import { ref } from 'vue';
+import PostFooter from '@/components/PostFooter.vue';
+import { computed, ref } from 'vue';
+import LikeIcon from '@/components/LikeIcon.vue';
+import LikesView from './LikesView.vue';
 const props = defineProps<{
   post: Post
 }>()
@@ -42,19 +44,13 @@ const posterName = poster?.displayname ? poster.displayname : poster?.name.first
       <div class="content">
         <p>{{ post.body }}</p>
       </div>
+      <LikesView :post="post" />
     </div>
     <PostFooter :post="post" :poster="poster" />
   </div>
 </template>
 
 <style scoped>
-.pfp {
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  object-fit: cover;
-}
-
 .post {
   margin-top: 10px;
 }
