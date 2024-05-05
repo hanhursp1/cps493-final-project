@@ -77,6 +77,23 @@ async function get(id) {
 }
 
 /**
+ * Returns true if a user exists and is valid
+ * @param {number} id 
+ * @returns {Promise<boolean>}
+ */
+async function userExists(id) {
+  const users = await dataP
+  if (id < 0 || id >= users.items.length) {
+    return false
+  }
+  const usr = users.items[id]
+  if (usr.status != 0) {
+    return false
+  }
+  return true
+}
+
+/**
  * Gets an unsanitized user based on `id`. Requires admin rights.
  * This allows an admin to modify a user's profile.
  * @param {User} admin 
@@ -352,6 +369,7 @@ async function register(info) {
 module.exports = {
   get,
   getAll,
+  userExists,
   search,
   add,
   remove,

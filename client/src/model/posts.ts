@@ -4,6 +4,7 @@ import store from '@/store'
 import { apiDelete, apiGet, apiPost } from './fetch'
 import type { Ref } from 'vue'
 import { createActivity, type ActivitySubmission } from './activities'
+import { currentUserID } from './users'
 
 /* TYPES */
 export interface Post {
@@ -105,6 +106,26 @@ export async function deletePost(id: number) {
   }
 }
 
-export function postIsActive(post: Post | undefined) {
-  return post && !post.removed
+export function postIsActive(post: Post | undefined): boolean {
+  return (post != undefined && !post.removed)
+}
+
+export function likedByUser(post: Post, userID: number): boolean {
+  return post.likedBy.findIndex(like => like == userID) != -1
+}
+
+export async function likePost(post: Post, liked: boolean) {
+  const userID = currentUserID()
+  const apiResponse = await apiPost<{userID: number, liked: boolean}, void>(
+    "/posts/" + post.postID + "/like", {userID, liked})
+  if (apiResponse.isSuccess) {
+    if (liked)
+      store.state?.posts[post.postID].likedBy.push(userID)
+    else if (store.state)
+      store.state.posts[post.postID].likedBy = store.state.posts[post.postID].likedBy.filter(id => id !== userID)
+  }
+}
+
+export async function unlikePost(post: Post) {
+
 }

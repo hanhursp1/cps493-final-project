@@ -107,7 +107,7 @@ export function currentUser(): User | undefined {
 }
 
 export function currentUserID(): number {
-  return store.state?.user?.id ? store.state.user.id : -1
+  return store.state?.user ? store.state.user.id : -1
 }
 
 export function isLoggedIn(): boolean {

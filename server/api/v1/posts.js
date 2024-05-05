@@ -36,7 +36,15 @@ app
     const id = Number(req.params.id)
     posts.remove(id).then(() => {
       res.send(helpers.makeEmptyResponse())
-    }).catch((next))
+    }).catch(next)
+  })
+  .post("/:id/like", (req, res, next) => {
+    const postID = Number(req.params.id)
+    const userID = Number(req.body.userID)
+    const liked = Boolean(req.body.liked)
+    posts.like(postID, userID, liked).then(() => {
+      res.send(helpers.makeEmptyResponse())
+    }).catch(next)
   })
 
 module.exports = app

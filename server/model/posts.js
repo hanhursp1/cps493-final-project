@@ -1,6 +1,7 @@
 const data = require('./data')
 const users = require('./users')
 const activities = require('./activities')
+const { post } = require('../api')
 
 /**
  * @typedef {import('../../client/src/model/posts').Post} Post
@@ -75,6 +76,28 @@ async function create(submission) {
 
 /**
  * 
+ * @param {number} postID 
+ * @param {number} userID 
+ * @param {boolean} liked 
+ */
+async function like(postID, userID, liked) {
+  const posts = await dataP
+  if (!users.userExists(userID)) throw new Error("User does not exist")
+  if (liked)
+    posts.items[postID].likedBy.push(userID)
+  else
+    posts.items[postID].likedBy = posts.items[postID].likedBy.filter(id => id !== userID)
+  try {
+    await data.saveData(fileName, posts)
+    refresh()
+  } catch(err) {
+    console.log(err)
+    throw new Error("Could not like post")
+  }
+}
+
+/**
+ * 
  * @param {number} id
  * @returns {Promise<void>}
  */
@@ -101,5 +124,6 @@ module.exports = {
   getAll,
   get,
   create,
-  remove
+  remove,
+  like
 }

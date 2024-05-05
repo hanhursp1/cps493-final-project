@@ -6,7 +6,9 @@
       "posterID": 1,
       "timestamp": 0,
       "body": "Hello world! We're currently experimenting with the site.",
-      "likedBy": [],
+      "likedBy": [
+        0
+      ],
       "replies": [],
       "attachments": []
     },
