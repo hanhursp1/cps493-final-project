@@ -21,6 +21,14 @@
     redirect.redirect("/users/" + option.id)
   }
 
+  function getName(usr: User) {
+    if (usr.displayname) {
+      return usr.displayname
+    } else {
+      return usr.name.first + " " + usr.name.last
+    }
+  }
+
 
 </script>
 
@@ -41,7 +49,7 @@
           >
           <template #empty>No results found</template>
           <template #default="props">
-            {{ props.option.name.first + " " + props.option.name.last }}
+            {{ getName(props.option) }}
           </template>
         </o-autocomplete>
       </o-field>
