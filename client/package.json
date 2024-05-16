@@ -11,10 +11,12 @@
     "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.15.4",
-    "vue": "^3.4.15",
-    "bulma": "^0.9.4",
     "@aws-crypto/sha256-js": "5.2.0",
+    "@fortawesome/fontawesome-free": "^5.15.4",
+    "@oruga-ui/oruga-next": "^0.8.9",
+    "@oruga-ui/theme-bulma": "^0.3.0",
+    "bulma": "^0.9.4",
+    "vue": "^3.4.15",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {

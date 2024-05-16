@@ -5,6 +5,7 @@ const users = require('../../model/users')
 /**
  * @typedef {import('../../../client/src/model/users').User} User
  * @typedef {import('../../../client/src/model/users').Registration} Registration
+ * @typedef {import('../../../client/src/model/users').UserQuery} UserQuery
  */ 
 /**
  * @template T
@@ -23,6 +24,16 @@ app
     if(!req.query.q) throw new Error("Search query requires a query")
     const search = String(req.query.q)
     users.search(search).then(result => {
+      res.send(helpers.makeResponse(result))
+    }).catch(next)
+  })
+  .post("/search", (req, res, next) => {
+    /** @type {UserQuery} */
+    const q = req.body
+    if (typeof(q.maxUsers) != 'number' || typeof(q.query) != 'string') {
+      throw new Error("Invalid query, must have a `maxUsers` field and a `query` field.")
+    }
+    users.searchCount(q.query, q.maxUsers).then(result => {
       res.send(helpers.makeResponse(result))
     }).catch(next)
   })

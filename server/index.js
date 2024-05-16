@@ -13,7 +13,8 @@ const app = express()
 const PORT = process.env.PORT ?? 3000
 
 app
-  .use(express.static('client/dist'))
+  // Static paths removed for testing
+  // .use(express.static('client/dist'))
   .use(express.json())
   .use((req, resp, next) => {
     resp.setHeader("Access-Control-Allow-Origin", "*")
@@ -22,10 +23,10 @@ app
     next()
   })
   .use("/api", api)
-  .use((req, res, next) => {
-    res.sendFile(path.join(__dirname, "../client/dist/index.html"))
-    next()
-  })
+  // .use((req, res, next) => {
+  //   res.sendFile(path.join(__dirname, "../client/dist/index.html"))
+  //   next()
+  // })
   .use((err, req, res, next) => {
     console.error(err)
     /** @type {DataEnvelope<void>} */

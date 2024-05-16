@@ -1,3 +1,4 @@
+import { useRouter } from "vue-router"
 import type { DataEnvelope } from "./transporttypes"
 
 export const API_ROOT = import.meta.env.VITE_API_ROOT
@@ -27,4 +28,13 @@ export async function apiPost<T, R>(action: string, data: T): Promise<DataEnvelo
 
 export async function apiDelete<T, R>(action: string, data?: T): Promise<DataEnvelope<R>> {
   return await api(action, data, "DELETE")
+}
+
+export function useRedirect() {
+  const router = useRouter()
+  return {
+    redirect(to: string) {
+      router.push(to)
+    }
+  }
 }

@@ -114,10 +114,13 @@ async function search(q) {
   const filter = new RegExp(q, 'i')
   return (await dataP).items.filter(item =>
     item.status == 0 && (
-    filter.test(item.name.first) ||
-    filter.test(item.name.last) ||
+    filter.test((item.name.first + " " + item.name.last).toLowerCase()) ||
     filter.test(item.username))
   ).map(u => sanitizeUser(u))
+}
+
+async function searchCount(q, count) {
+  return (await search(q)).slice(0, count)
 }
 
 /**
@@ -371,6 +374,7 @@ module.exports = {
   getAll,
   userExists,
   search,
+  searchCount,
   add,
   remove,
   removeSafe,

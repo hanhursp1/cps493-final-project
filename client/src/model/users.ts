@@ -64,6 +64,11 @@ export enum LoginStatus {
   InvalidUser
 }
 
+export interface UserQuery {
+  query: string,
+  maxUsers: number
+}
+
 export function getConcatName(user: User): string {
   return user?.displayname ? user.displayname : user?.name.first + " " + user?.name.last
 }
@@ -85,6 +90,15 @@ export function getUser(userID: number): User | undefined {
   const result = store.state ? store.state.users[userID] : undefined
   if (result && result.status == 0) return result
   return undefined
+}
+
+export async function getUserWithAPI(userID: number): Promise<User>{
+  const res = await apiGet<User>("users/" + String(userID))
+  if (res.isSuccess) {
+    return res.data
+  } else {
+    throw new Error("Could not get user with ID: " + String(userID))
+  }
 }
 
 // Returns a users's ID based on their username
@@ -176,4 +190,12 @@ async function loginImpl(username: string, password: string): Promise<LoginStatu
   }
   store.state.user = usr.data
   return LoginStatus.Ok
+}
+
+export async function searchUsers(query: UserQuery): Promise<User[]> {
+  const res = await apiPost<UserQuery, User[]>("users/search", query)
+  if (res.isSuccess)
+    return res.data
+  else
+    return []
 }

@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { UserPrivilege, currentUser, getPFP, isLoggedIn } from '@/model/users';
+import UsersSearch from '@/components/UsersSearch.vue'
 
 let isActive: Ref<boolean> = ref(false)
 
@@ -71,6 +72,7 @@ function setMenuActive(val: boolean) {
     </div>
 
     <div class="navbar-end">
+      <UsersSearch />
       <div class="navbar-item" v-if="!isLoggedIn()">
         <div class="buttons">
           <RouterLink to="/register" class="button is-primary">

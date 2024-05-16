@@ -9,6 +9,8 @@ if (!store.state) {
     console.log("store.state initialized!")
     store.state = state
     console.log(store.state)
+  }).catch(err => {
+    console.log(err)
   })
 }
 </script>

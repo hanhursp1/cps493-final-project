@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { getPosts, postIsActive } from '@/model/posts'
+import { getPosts, postIsActive, type Post } from '@/model/posts'
 import { computed } from 'vue'
 
 import PostCard from './PostCard.vue';
 import WorkoutCard from './WorkoutCard.vue'
 
+const props = defineProps<{
+  selectedPosts: Post[] | undefined
+}>()
 
 
 const posts = computed(getPosts)
